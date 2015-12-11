@@ -36,6 +36,7 @@ source('data-cleaning.R')
 # subset to MLRAs 17, 18, 22A
 source('sonora-office-specific-stuff.R')
 
+## now update SoilWeb with new data
 
 
 
