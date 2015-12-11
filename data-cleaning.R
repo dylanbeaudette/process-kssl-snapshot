@@ -1,6 +1,6 @@
 
 # load cached data
-load('cached-data/kssl-site-and-horizon-data.Rda')
+load('S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
 
 
 ## QC
@@ -70,13 +70,10 @@ s <- join(s, s.sp@data[, c('pedon_key', 'state', 'mlra')])
 h$c_tot[which(h$c_tot == 0)] <- NA
 h$n_tot[which(h$n_tot == 0)] <- NA
 
-
-# fill NA carbonate-C with 0
-h$caco3 <- ifelse(is.na(h$caco3), 0, h$caco3)
-
+# replace missing CaCO3 with 0
 # organic matter and organic carbon
-h$estimated_oc <- with(h, c_tot - (caco3 * 0.12))
-h$estimated_om <- with(h, Calc_OC * 1.724 )
+h$estimated_oc <- with(h, c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12))
+h$estimated_om <- with(h, estimated_oc * 1.724 )
 
 # estimate C:N 
 h$estimated_c_to_n <- h$estimated_oc / h$n_tot
@@ -86,7 +83,9 @@ h$ex_k_saturation <- h$ex_k / h$base_sum
 
 
 # fill pH 1:1 with saturated paste pH when missing
-hexbinplot(ph_h2o ~ ph_sp, data=h, asp=1, xlim=c(1, 13), ylim=c(1, 13), trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2))
+png(file='figures/ph-1-to-1-water-vs-sat-paste.png', width=600, height=600)
+(hexbinplot(ph_h2o ~ ph_sp, data=h, asp=1, xlab='pH by saturated paste', ylab='pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+dev.off()
 
 (l.ph <- ols(ph_h2o ~ rcs(ph_sp), data=h, x=TRUE, y=TRUE, subset=ph_h2o >= 0 & ph_h2o <= 14))
 anova(l.ph)
@@ -98,8 +97,9 @@ h$estimated_ph_h2o[idx] <- predict(l.ph, h[idx, ])
 h$estimated_ph_h2o[which(h$estimated_ph_h2o < 0)] <- NA
 h$estimated_ph_h2o[which(h$estimated_ph_h2o > 14)] <- NA
 
-hexbinplot(estimated_ph_h2o ~ ph_h2o, data=h, xlim=c(1, 13), ylim=c(1, 13), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2))
-
+png(file='figures/ph-1-to-1-water-vs-sat-paste-predictions.png', width=600, height=600)
+(hexbinplot(ph_h2o ~ estimated_ph_h2o, data=h, ylab='measured pH by 1:1 H2O', xlab='predicted pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+dev.off()
 
 
 # re-calculate BS82 when missing, but ex-cations and ex-acid are available
@@ -110,10 +110,15 @@ h$bs82.computed <- with(h, (ex_ca + ex_mg + ex_na + ex_k) / (ex_ca + ex_mg + ex_
 h$bs82.computed[which(h$bs82.computed < 0 | h$bs82.computed > 100)] <- NA
 
 # check to make sure that this is correct: YES
-hexbinplot(bs82 ~ bs82.computed, data=h, xlim=c(0,100), ylim=c(0,100), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2))
+png(file='figures/measured-vs-computed-bs82.png', width=600, height=600)
+(hexbinplot(bs82 ~ bs82.computed, xlab='BS at pH 8.2 (computed)', ylab='BS at pH 8.2 (measured)', data=h, xlim=c(0,100), ylim=c(0,100), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+dev.off()
 
 # replace missing BS82 with computed BS82
-h$bs82 <- ifelse(is.na(h$bs82) & (! is.na(bs82.computed)), bs82.computed, h$bs82)
+h$bs82 <- ifelse(is.na(h$bs82) & (! is.na(h$bs82.computed)), h$bs82.computed, h$bs82)
+
+# remove temp computed field
+h$bs82.computed <- NULL
 
 # remove negative values
 h$bs82[which(h$bs82 < 0)] <- NA
@@ -124,12 +129,12 @@ h$bs82[which(h$bs82 < 0)] <- NA
 ## export data for SoilWeb
 
 # print table defs
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.site', obj=s[1, ], row.names=FALSE), file='site.sql')
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.horizon', obj=h[1, ], row.names=FALSE), file='hz.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.site', obj=s[1, ], row.names=FALSE), file='S:/NRCS/Lab_Data/site.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.horizon', obj=h[1, ], row.names=FALSE), file='S:/NRCS/Lab_Data/hz.sql')
 
 # save raw, minimally processed data
-write.csv(s, file=gzfile('kssl-site.csv.gz'), row.names=FALSE)
-write.csv(h, file=gzfile('kssl-horizon.csv.gz'), row.names=FALSE)
+write.csv(s, file=gzfile('S:/NRCS/Lab_Data/kssl-site.csv.gz'), row.names=FALSE)
+write.csv(h, file=gzfile('S:/NRCS/Lab_Data/kssl-horizon.csv.gz'), row.names=FALSE)
 
 ## upgrade to SoilProfilecollection
 lab <- h
@@ -139,5 +144,5 @@ depths(lab) <- pedon_key ~ hzn_top + hzn_bot
 site(lab) <- s
 
 # cache for later
-save(lab, file='cached-data/kssl-SPC.Rda')
+save(lab, file='S:/NRCS/Lab_Data/cached-data/kssl-SPC.Rda')
 
