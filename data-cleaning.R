@@ -66,6 +66,9 @@ s <- join(s, s.sp@data[, c('pedon_key', 'state', 'mlra')])
 ## 4. Estimated values: prefix with "estimated"
 # Double-check these !
 
+# compute ex-K saturation
+h$ex_k_saturation <- h$ex_k / h$base_sum
+
 # relace 0 C and N
 h$c_tot[which(h$c_tot == 0)] <- NA
 h$n_tot[which(h$n_tot == 0)] <- NA
@@ -77,9 +80,6 @@ h$estimated_om <- with(h, estimated_oc * 1.724 )
 
 # estimate C:N 
 h$estimated_c_to_n <- h$estimated_oc / h$n_tot
-
-# compute ex-K saturation
-h$ex_k_saturation <- h$ex_k / h$base_sum
 
 
 # fill pH 1:1 with saturated paste pH when missing

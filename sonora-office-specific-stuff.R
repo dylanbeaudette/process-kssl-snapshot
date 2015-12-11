@@ -1,6 +1,6 @@
 
 # load cached data
-load('cached-data/kssl-SPC.Rda')
+load('S:/NRCS/Lab_Data/cached-data/kssl-SPC.Rda')
 
 
 #### subset Sonora Office stuff here:
@@ -16,25 +16,35 @@ gc(reset = TRUE)
 
 ## fill some missing data if possible
 
+## BS at pH 8.2
+# (p1 <- xyplot(bs82 ~ bs7, data=horizons(lab), col='black', type=c('p','smooth','g')))
+# (p2 <- xyplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), col='black', type=c('p','smooth','g')))
 
-# reationship is almost linear
-(p1 <- xyplot(bs82 ~ bs7, data=horizons(lab), col='black', type=c('p','smooth','g')))
-(p2 <- xyplot(bs82 ~ ph_h2o, data=horizons(lab), col='black', type=c('p','smooth','g')))
+png(file='figures/bs82-vs-bs7.png', width=600, height=600)
+(hexbinplot(bs82 ~ bs7, data=horizons(lab), xbins=30, ylab='Base Saturation (NH4-Ac, pH 7)', xlab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100 & bs7 < 100, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+dev.off()
+
+png(file='figures/bs82-vs-ph_h2o.png', width=600, height=600)
+(hexbinplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), xbins=50, xlab='pH 1:1 H2O', ylab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100, asp=1))
+dev.off()
 
 # model bs82 from bs7, truncate to less than 100%
-# can't use pH, as it is missing from too many samples
-# (l.bs <- ols(bs82 ~ bs7 + rcs(ph_h2o), data=horizons(lab), subset=bs7 < 100 & bs82 < 100, x=TRUE, y=TRUE))
+# for now, two possible models
 (l.bs <- ols(bs82 ~ rcs(bs7), data=horizons(lab), subset=bs7 < 100 & bs82 < 100, x=TRUE, y=TRUE))
+# (l.bs <- ols(bs82 ~ rcs(bs7) + rcs(estimated_ph_h2o), data=horizons(lab), subset=bs7 < 100 & bs82 < 100, x=TRUE, y=TRUE))
+
 
 # check predictions
-plot(lab$bs82 ~ predict(l.bs, horizons(lab))) 
-abline(0, 1, col='red', lwd=2)
+png(file='figures/predicted-bs82-vs-measured-bs82.png', width=600, height=600)
+(hexbinplot(lab$bs82 ~ predict(l.bs, horizons(lab)), xbins=30, ylab='Predicted Base Saturation (sum of bases, pH 8.2)', xlab='Measured Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+dev.off()
+
 
 # RMSE: ~ 12% base saturation
 sqrt(mean((predict(l.bs, horizons(lab)) - lab$bs82)^2, na.rm = TRUE))
 
 # save model for others... could probably use some work
-save(l.bs, file='mlra-17-18-22A-BS82-model.Rda')
+save(l.bs, file='S:/NRCS/Lab_Data/mlra-17-18-22A-BS82-model.Rda')
 
 # re-index missing values, that CAN BE predicted from BS7
 missing.bs82 <- which(is.na(lab$bs82) & !is.na(lab$bs7) & lab$bs7 < 100)
@@ -50,21 +60,18 @@ lab$bs82.method[missing.bs82] <- 'estimated'
 (p3 <- xyplot(bs82 ~ bs7 | bs82.method, data=horizons(lab), type=c('p','smooth','g')))
 
 
-
-
-
 ## save to CSV file for others
-write.csv(as(lab, 'data.frame'), file='kssl-ca-june-2015.csv', row.names=FALSE)
+write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-june-2015.csv', row.names=FALSE)
 
 # init coordinates
 coordinates(lab) <- ~ x + y
 proj4string(lab) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 ## save result to Rda object for later
-save(lab, file='kssl-ca-june-2015.Rda')
+save(lab, file='S:/NRCS/Lab_Data/kssl-ca-june-2015.Rda')
 
 ## graphical check: OK
-png(file='sample-locations.png', width=600, height=800, antialias = 'cleartype')
+png(file='S:/NRCS/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
 par(mar=c(0,0,3,0))
 map('county', 'California')
 plot(mlra[mlra$MLRARSYM %in% c('17', '18', '22A'), ], border='blue', add=TRUE)
@@ -77,7 +84,7 @@ dev.off()
 writeOGR(as(lab, 'SpatialPointsDataFrame')[, c('pedon_id', 'taxonname')], dsn='L:/Geodata/UCD_NCSS', layer='mlra_17_18_22-lab_data', driver='ESRI Shapefile', overwrite_layer=TRUE)
 
 ## aggregate some soil properties for all profiles by MLRA, along 1 cm slices
-a <- slab(lab, mlra ~ clay + ex_k_saturation + ph_h2o + bs82)
+a <- slab(lab, mlra ~ clay + ex_k_saturation + estimated_ph_h2o + bs82)
 
 # adjust factor labels for MLRA to include number of pedons
 pedons.per.mlra <- tapply(site(lab)$mlra, site(lab)$mlra, length)
@@ -90,7 +97,7 @@ a$variable <- factor(a$variable, labels=c('Clay %', 'Ex-K Saturation', 'pH 1:1 W
 cols <- brewer.pal('Set1', n=3)
 
 # plot: nice
-png(file='properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
+png(file='S:/NRCS/Lab_Data/properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
 xyplot(
   top ~ p.q50 | variable, groups=mlra, data=a, lower=a$p.q25, upper=a$p.q75, 
   ylim=c(170,-5), alpha=0.25, scales=list(y=list(tick.num=7, alternating=3), x=list(relation='free',alternating=1)),
@@ -102,7 +109,3 @@ xyplot(
 )
 dev.off()
 
-
-
-
-summary(horizons(lab)[, c('clay', 'ph_h2o', 'fe_dith', 'fe_ox')])

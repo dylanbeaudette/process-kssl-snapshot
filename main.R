@@ -32,6 +32,8 @@ source('extract-from-access-DB.R')
 source('data-cleaning.R')
 
 ## Sonora office specific
+# estimate BS82 from BS7
+# subset to MLRAs 17, 18, 22A
 source('sonora-office-specific-stuff.R')
 
 
