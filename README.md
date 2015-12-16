@@ -1,23 +1,29 @@
 # Generate a KSSL pedon database for SoilWeb from the USDA-NRCS-NCSS snapshot
 
-I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within SoilWeb and by `fetchKSSL()`. This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "pedon/site" scale and "horizon" scale.
+I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "pedon/site" scale and "horizon" scale.
 
 
 ## Data Cleaning
+As part of the "processing" of these data, a number of data cleaning operations are performed.
 
 ### Taxonname
+A new field caled `taxonname` is added. This field is set to the `correlated_as` value when not null and not "unnamed". Otherwise, the `taxonname` field is set to the value in `sampled_as`. 
 
 
 ### Horizonation
+1. Missing lower horizon depths are replaced with the corrosponding top depth + 1cm.
+2. "O" horizons using the old-style notation, with top depths > bottom depths, are removed. Sorry.
 
 
 ### MLRA and State Data
-
+State and MLRA codes are added to the data using spatial overlay with the most recent US states and NRCS MLRA maps.
 
 ### Estimated Properties
-
-
-
+1. K saturation is computed via `ex_k / base_sum`
+2. total C and N values of 0 are replaced by NA
+3. organic C estimated via `c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12)`
+4. organic matter estimated via `estimated_oc * 1.724`
+5. C:N estimated via `h$estimated_oc / h$n_tot`
 
 
 ## Data Elements
