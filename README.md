@@ -35,6 +35,7 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 7. base saturation (pH 8.2) calculated when missing: 
  + `h$bs82.computed <- with(h, (ex_ca + ex_mg + ex_na + ex_k) / (ex_ca + ex_mg + ex_na + ex_k + acid_tea)) * 100`
 
+![alt text](figures/measured-vs-computed-bs82.png)
 
 ## Data Elements
 Horizon attributes:
