@@ -17,7 +17,6 @@ library(RPostgreSQL)
 ## CA Data NOTE: missing bs82 estimated via bs7
 ## CA Data NOTE: C and N values of 0 are replaced with NA
 
-## !!! aggregating (via slab) profiles with missing horizons fills memory... filtering complete profiles removes some good data
 ## !!! filtering based on prep code may exclude some good data !!! figure this out
 
 

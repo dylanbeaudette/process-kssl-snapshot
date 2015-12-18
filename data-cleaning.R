@@ -84,7 +84,7 @@ h$estimated_c_to_n <- h$estimated_oc / h$n_tot
 
 # fill pH 1:1 with saturated paste pH when missing
 png(file='figures/ph-1-to-1-water-vs-sat-paste.png', width=600, height=600)
-(hexbinplot(ph_h2o ~ ph_sp, data=h, asp=1, xlab='pH by saturated paste', ylab='pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(ph_h2o ~ ph_sp, data=h, asp=1, main='All Pedons', xlab='pH by saturated paste', ylab='pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 (l.ph <- ols(ph_h2o ~ rcs(ph_sp), data=h, x=TRUE, y=TRUE, subset=ph_h2o >= 0 & ph_h2o <= 14))
@@ -98,7 +98,7 @@ h$estimated_ph_h2o[which(h$estimated_ph_h2o < 0)] <- NA
 h$estimated_ph_h2o[which(h$estimated_ph_h2o > 14)] <- NA
 
 png(file='figures/ph-1-to-1-water-vs-sat-paste-predictions.png', width=600, height=600)
-(hexbinplot(ph_h2o ~ estimated_ph_h2o, data=h, ylab='measured pH by 1:1 H2O', xlab='predicted pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(ph_h2o ~ estimated_ph_h2o, data=h, main='All Pedons', ylab='measured pH by 1:1 H2O', xlab='predicted pH by 1:1 H2O', xlim=c(1, 13), ylim=c(1, 13), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 
@@ -111,7 +111,7 @@ h$bs82.computed[which(h$bs82.computed < 0 | h$bs82.computed > 100)] <- NA
 
 # check to make sure that this is correct: YES
 png(file='figures/measured-vs-computed-bs82.png', width=600, height=600)
-(hexbinplot(bs82 ~ bs82.computed, xlab='BS at pH 8.2 (computed)', ylab='BS at pH 8.2 (measured)', data=h, xlim=c(0,100), ylim=c(0,100), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(bs82 ~ bs82.computed, main='All Pedons', xlab='BS at pH 8.2 (computed)', ylab='BS at pH 8.2 (measured)', data=h, xlim=c(0,100), ylim=c(0,100), asp=1, trans=log, inv=exp) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 # replace missing BS82 with computed BS82

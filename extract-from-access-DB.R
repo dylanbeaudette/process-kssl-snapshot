@@ -46,7 +46,7 @@ ORDER BY NCSS_Pedon_Taxonomy.pedon_key, hzn_top ASC;"
 
 
 # setup connections
-kssl.channel <- odbcConnectAccess2007('S:/NRCS/Lab_Data/NCSS_Soil_Characterization_Database_6_30_2015.accdb', readOnlyOptimize=TRUE)
+kssl.channel <- odbcConnectAccess2007('S:/NRCS/Lab_Data/NCSS_Soil_Characterization_Database_12_7_2015.accdb', readOnlyOptimize=TRUE)
 
 # get data from KSSL snapshot
 s <- sqlQuery(kssl.channel, q.site, stringsAsFactors=FALSE)

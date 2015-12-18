@@ -21,11 +21,11 @@ gc(reset = TRUE)
 # (p2 <- xyplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), col='black', type=c('p','smooth','g')))
 
 png(file='figures/bs82-vs-bs7.png', width=600, height=600)
-(hexbinplot(bs82 ~ bs7, data=horizons(lab), xbins=30, ylab='Base Saturation (NH4-Ac, pH 7)', xlab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100 & bs7 < 100, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(bs82 ~ bs7, data=horizons(lab), xbins=30, main='MLRAs: 17, 18, 22A', ylab='Base Saturation (NH4-Ac, pH 7)', xlab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100 & bs7 < 100, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 png(file='figures/bs82-vs-ph_h2o.png', width=600, height=600)
-(hexbinplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), xbins=50, xlab='pH 1:1 H2O', ylab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100, asp=1))
+print(hexbinplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), xbins=50, main='MLRAs: 17, 18, 22A', xlab='pH 1:1 H2O', ylab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100, asp=1))
 dev.off()
 
 # model bs82 from bs7, truncate to less than 100%
@@ -36,7 +36,7 @@ dev.off()
 
 # check predictions
 png(file='figures/predicted-bs82-vs-measured-bs82.png', width=600, height=600)
-(hexbinplot(lab$bs82 ~ predict(l.bs, horizons(lab)), xbins=30, ylab='Predicted Base Saturation (sum of bases, pH 8.2)', xlab='Measured Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(lab$bs82 ~ predict(l.bs, horizons(lab)), xbins=30, main='MLRAs: 17, 18, 22A', ylab='Predicted Base Saturation (sum of bases, pH 8.2)', xlab='Measured Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 
@@ -61,14 +61,14 @@ lab$bs82.method[missing.bs82] <- 'estimated'
 
 
 ## save to CSV file for others
-write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-june-2015.csv', row.names=FALSE)
+write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-december-2015.csv', row.names=FALSE)
 
 # init coordinates
 coordinates(lab) <- ~ x + y
 proj4string(lab) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 ## save result to Rda object for later
-save(lab, file='S:/NRCS/Lab_Data/kssl-ca-june-2015.Rda')
+save(lab, file='S:/NRCS/Lab_Data/kssl-ca-december-2015.Rda')
 
 ## graphical check: OK
 png(file='S:/NRCS/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
@@ -98,7 +98,7 @@ cols <- brewer.pal('Set1', n=3)
 
 # plot: nice
 png(file='S:/NRCS/Lab_Data/properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
-xyplot(
+print(xyplot(
   top ~ p.q50 | variable, groups=mlra, data=a, lower=a$p.q25, upper=a$p.q75, 
   ylim=c(170,-5), alpha=0.25, scales=list(y=list(tick.num=7, alternating=3), x=list(relation='free',alternating=1)),
   panel=panel.depth_function, prepanel=prepanel.depth_function, sync.colors=TRUE, asp=1.5,
@@ -106,6 +106,6 @@ xyplot(
   par.settings=list(superpose.line=list(col=cols, lty=c(1,2,3), lwd=2)),
   auto.key=list(columns=3, title='MLRA', points=FALSE, lines=TRUE),
   sub=paste(length(lab), 'profiles')
-)
+))
 dev.off()
 

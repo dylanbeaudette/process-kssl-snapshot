@@ -2,6 +2,9 @@
 
 I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "pedon/site" scale and "horizon" scale.
 
+## News
+* 2015-12-18: started processing new snapshot "December 2015" (62922 pedons, 401427 horizons) **why the decrease in records?**
+* 2015-12-11: loaded snapshot "August 2015" (64071 pedons, 402199 horizons)
 
 ## Data Cleaning
 As part of the "processing" of these data, a number of data cleaning operations are performed.
@@ -24,6 +27,13 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 3. organic C estimated via `c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12)`
 4. organic matter estimated via `estimated_oc * 1.724`
 5. C:N estimated via `h$estimated_oc / h$n_tot`
+6. pH (1:1 H2O) estimated when missing via saturate paste pH (pedotransfer function)
+
+![alt text](figures/ph-1-to-1-water-vs-sat-paste.png)
+![alt text](figures/ph-1-to-1-water-vs-sat-paste-predictions.png)
+
+7. base saturation (pH 8.2) calculated when missing: 
+ + `h$bs82.computed <- with(h, (ex_ca + ex_mg + ex_na + ex_k) / (ex_ca + ex_mg + ex_na + ex_k + acid_tea)) * 100`
 
 
 ## Data Elements
