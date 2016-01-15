@@ -3,7 +3,8 @@
 I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "pedon/site" scale and "horizon" scale.
 
 ## News
-* 2015-12-18: started processing new snapshot "December 2015" (62922 pedons, 401427 horizons) **why the decrease in records?**
+* 2016-01-15: added a new column with fragments (percent by weight) > 2mm. It would be better to convert to percent by volume
+* 2015-12-18: started processing new snapshot "December 2015" (62922 pedons, 401427 horizons) **RaCA sites no longer included**
 * 2015-12-11: loaded snapshot "August 2015" (64071 pedons, 402199 horizons)
 
 ## Data Cleaning
@@ -94,6 +95,7 @@ Horizon attributes:
   * w15l2
   * w15cly
   * cec7_cly
+  * frags
   * estimated_oc
   * estimated_om
   * estimated_c_to_n
@@ -125,3 +127,5 @@ Site attributes:
 2. add HTML table below KSSL lab summary figures in SDE
 3. locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
 4. solve problem with multiple prep codes ("S" and "G") in the water retention and Db tables
+5. convert frags from pct by weight to pct by volume, or get fragment data from NASIS
+

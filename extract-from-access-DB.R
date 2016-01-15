@@ -29,7 +29,7 @@ ph_h2o, ph_cacl2, ph_kcl, ph_sp, gypl20, caco3, ec_12pre, sar,
 oc, c_tot, n_tot, fe_dith, fe_ox,
 p_olsn, p_nz,
 db_13b, db_od, COLEws, 
-wrd_ws13 as whc, w3cld, w15l2, w15cly, cec7_cly
+wrd_ws13 as whc, w3cld, w15l2, w15cly, cec7_cly, wpg2 as frags
 FROM 
 (((((((
 NCSS_Pedon_Taxonomy 
