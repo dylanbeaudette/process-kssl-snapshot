@@ -123,9 +123,13 @@ Site attributes:
 
 
 # TODO
-1. write manual on KSSL processing steps, assumptions, models, etc.
-2. add HTML table below KSSL lab summary figures in SDE
-3. locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
-4. solve problem with multiple prep codes ("S" and "G") in the water retention and Db tables
-5. convert frags from pct by weight to pct by volume, or get fragment data from NASIS
+* write manual on KSSL processing steps, assumptions, models, etc.
+* locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
+* solve problem with multiple (rows) prep codes (most common: "S","GP","HM") in the water retention and Db tables--this will require multiple queries to the Db table and cleaning of the results:
+ + S	air-dry	whole soil	The air-dried whole soil passing a 3 inch sieve
+ + GP	air-dry	whole soil	The air-dried whole soil including all coarse fragments
+ + M	moist	<2 mm	The moist soil passing a No. 10-mesh sieve kept in the moist state
+ + HM	air-dry	whole soil	The air-dried whole soil including all coarse fragments handled with stainless-steel or non-metallic equipment to reduce the contamination with heavy metals
+
+* convert frags from pct by weight to pct by volume, or get fragment data from NASIS
 
