@@ -25,6 +25,10 @@ library(RPostgreSQL)
 # saves 's' and 'h' to 'S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda'
 source('extract-from-access-DB.R')
 
+## extract NASIS morphologic data
+# this saves files for upload to SoilWeb in the current working dir
+source('extract-NASIS-morph-data-from-access-DB.R')
+
 ## clean-up data
 # estimate pH 1:1 water, oc, om
 # saves 'lab' to 'cached-data/kssl-SPC.Rda'
@@ -35,7 +39,7 @@ source('data-cleaning.R')
 # subset to MLRAs 17, 18, 22A
 source('sonora-office-specific-stuff.R')
 
-## now update SoilWeb with new data
+## now update SoilWeb (2-1 and 2-2) with new data
 
 
 
