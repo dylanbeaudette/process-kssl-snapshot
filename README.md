@@ -8,7 +8,7 @@ Snapshots:
 
 ## News
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
-* 2016-01-15: added a new column with fragments (percent by weight) > 2mm. It would be better to convert to percent by volume
+* 2016-01-15: added a new column with fragments (percent by weight) > 2mm. **use these values with caution**
 * 2015-12-18: started processing new snapshot "December 2015" (62922 pedons, 401427 horizons) **RaCA sites no longer included**
 * 2015-12-11: loaded snapshot "August 2015" (64071 pedons, 402199 horizons)
 
@@ -33,7 +33,7 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 3. organic C estimated via `c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12)`
 4. organic matter estimated via `estimated_oc * 1.724`
 5. C:N estimated via `h$estimated_oc / h$n_tot`
-6. pH (1:1 H2O) estimated when missing via saturate paste pH (pedotransfer function)
+6. pH (1:1 H2O) estimated when missing via saturated paste pH (pedotransfer function)
 
 ![alt text](figures/ph-1-to-1-water-vs-sat-paste.png)
 ![alt text](figures/ph-1-to-1-water-vs-sat-paste-predictions.png)
@@ -123,13 +123,28 @@ Site attributes:
   * taxonname
   * state
   * mlra
+  * geomposhill
+  * geomposmntn
+  * geompostrce
+  * geomposflats
+  * hillslopeprof
+  * geomslopeseg
+  * bedrckkind
+  * bedrckhardness
+  * pmgroupname
+  * drainagecl
 
+Morphologic attributes:
 
+  * horizon colors (phcolor table)
+  * rock fragments (phfrags table)
+  * pores (phpores table)
+  * structure (phstructure)
 
 
 # TODO
 * update fetchKSSL and associated web-service to use JSON for all transfers
-* return snapshot dates in JSON
+* return snapshot dates in JSON data stream
 * write manual on KSSL processing steps, assumptions, models, etc.
 * locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
 * solve problem with multiple (rows) prep codes (most common: "S","GP","HM") in the water retention and Db tables--this will require multiple queries to the Db table and cleaning of the results:
@@ -138,5 +153,4 @@ Site attributes:
  + M	moist	<2 mm	The moist soil passing a No. 10-mesh sieve kept in the moist state
  + HM	air-dry	whole soil	The air-dried whole soil including all coarse fragments handled with stainless-steel or non-metallic equipment to reduce the contamination with heavy metals
 
-* convert frags from pct by weight to pct by volume, or get fragment data from NASIS
 
