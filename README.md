@@ -100,7 +100,7 @@ Horizon attributes:
   * w15l2
   * w15cly
   * cec7_cly
-  * frags
+  * frags (weight percentage > 2mm)
   * estimated_oc
   * estimated_om
   * estimated_c_to_n
@@ -134,10 +134,10 @@ Site attributes:
   * pmgroupname
   * drainagecl
 
-Morphologic attributes:
+Morphologic (field-described) attributes:
 
   * horizon colors (phcolor table)
-  * rock fragments (phfrags table)
+  * rock fragments -- volume percent (phfrags table)
   * pores (phpores table)
   * structure (phstructure)
 
