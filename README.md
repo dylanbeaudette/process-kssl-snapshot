@@ -1,6 +1,6 @@
 # Generate a KSSL pedon database for SoilWeb from the USDA-NRCS-NCSS snapshot
 
-I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "pedon/site" scale and "horizon" scale.
+I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](http://ncss-tech.github.io/AQP/soilDB/KSSL-demo.html). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "site/pedon" and "horizon" objects.
 
 Snapshots:
  * KSSL lab, taxonomic, and location data: 2015-12-07
@@ -44,35 +44,35 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 ![alt text](figures/measured-vs-computed-bs82.png)
 
 ## Data Elements
-Horizon attributes:
+Horizon Attributes:
 
-  * pedon_key
-  * labsampnum
-  * hzn_top
-  * hzn_bot
-  * hzn_desgn
-  * hzn_desgn_old
-  * lab_texture_class
-  * sand
-  * silt
-  * clay
-  * co3_cly
-  * silt_f_psa
-  * silt_c_psa
-  * vfs
-  * fs
-  * ms
-  * cs
-  * vcs
+  * pedon_key (internal ID)
+  * labsampnum (links KSSL and NASIS records)
+  * hzn_top (horizon top depth: cm)
+  * hzn_bot (horizon bottom depth: cm)
+  * hzn_desgn (horizon designation, updated)
+  * hzn_desgn_old (original horizon designation)
+  * lab_texture_class (lab determined texture class)
+  * sand (sand, wt. %)
+  * silt (silt, wt. %)
+  * clay (clay, wt. %)
+  * co3_cly (carbonate clay ??)
+  * silt_f_psa (fine silt, wt. %)
+  * silt_c_psa (coarse silt, wt. %)
+  * vfs (very fine sand, wt. %)
+  * fs (fine sand, wt. %)
+  * ms (medium sand, wt. %)
+  * cs (coarse sand, wt. %)
+  * vcs (very coarse sand, wt. %)
   * acid_tea
   * base_sum
   * al_kcl
-  * cec7
-  * cec82
+  * cec7 (CEC measured at pH 7, ... details)
+  * cec82 (CEC measured at pH 8.2, ... details)
   * ecec
   * al_sat
-  * bs82
-  * bs7
+  * bs82 (base saturation, pH 8.2, ... details)
+  * bs7 (base saturation, pH 7, ... details)
   * ex_ca
   * ex_mg
   * ex_na
@@ -107,7 +107,8 @@ Horizon attributes:
   * ex_k_saturation
   * estimated_ph_h2o
 
-Site attributes:
+
+Site/Pedon Attributes:
 
   * pedon_key
   * pedlabsampnum
@@ -134,7 +135,7 @@ Site attributes:
   * pmgroupname
   * drainagecl
 
-Morphologic (field-described) attributes:
+Morphologic (field-described) Attributes:
 
   * horizon colors (phcolor table)
   * rock fragments -- volume percent (phfrags table)
@@ -148,9 +149,9 @@ Morphologic (field-described) attributes:
 * write manual on KSSL processing steps, assumptions, models, etc.
 * locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
 * solve problem with multiple (rows) prep codes (most common: "S","GP","HM") in the water retention and Db tables--this will require multiple queries to the Db table and cleaning of the results:
- + S	air-dry	whole soil	The air-dried whole soil passing a 3 inch sieve
- + GP	air-dry	whole soil	The air-dried whole soil including all coarse fragments
- + M	moist	<2 mm	The moist soil passing a No. 10-mesh sieve kept in the moist state
- + HM	air-dry	whole soil	The air-dried whole soil including all coarse fragments handled with stainless-steel or non-metallic equipment to reduce the contamination with heavy metals
+  + S	air-dry	whole soil	The air-dried whole soil passing a 3 inch sieve
+  + GP	air-dry	whole soil	The air-dried whole soil including all coarse fragments
+  + M	moist	<2 mm	The moist soil passing a No. 10-mesh sieve kept in the moist state
+  + HM	air-dry	whole soil	The air-dried whole soil including all coarse fragments handled with stainless-steel or non-metallic equipment to reduce the contamination with heavy metals
 
 
