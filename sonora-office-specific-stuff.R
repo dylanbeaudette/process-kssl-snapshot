@@ -61,14 +61,14 @@ lab$bs82.method[missing.bs82] <- 'estimated'
 
 
 ## save to CSV file for others
-write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-december-2015.csv', row.names=FALSE)
+write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-september-2016.csv', row.names=FALSE)
 
 # init coordinates
 coordinates(lab) <- ~ x + y
 proj4string(lab) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 ## save result to Rda object for later
-save(lab, file='S:/NRCS/Lab_Data/kssl-ca-december-2015.Rda')
+save(lab, file='S:/NRCS/Lab_Data/kssl-ca-september-2016.Rda')
 
 ## graphical check: OK
 png(file='S:/NRCS/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
@@ -76,7 +76,7 @@ par(mar=c(0,0,3,0))
 map('county', 'California')
 plot(mlra[mlra$MLRARSYM %in% c('17', '18', '22A'), ], border='blue', add=TRUE)
 plot(as(lab, 'SpatialPoints'), add=TRUE, col='red', cex=0.25)
-title('June 2015')
+title('September 2016')
 dev.off()
 
 

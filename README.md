@@ -3,10 +3,11 @@
 I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](http://ncss-tech.github.io/AQP/soilDB/KSSL-demo.html). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "site/pedon" and "horizon" objects.
 
 Snapshots:
- * KSSL lab, taxonomic, and location data: 2015-12-07
+ * KSSL lab, taxonomic, and location data: 2016-09-06
  * NASIS morphologic data: 2016-04-20
 
 ## News
+* 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
 * 2016-01-15: added a new column with fragments (percent by weight) > 2mm. **use these values with caution**
 * 2015-12-18: started processing new snapshot "December 2015" (62922 pedons, 401427 horizons) **RaCA sites no longer included**
