@@ -126,6 +126,16 @@ h$bs82[which(h$bs82 < 0)] <- NA
 # estimating BS82 from BS7 doesn't work at the national-scale
 
 
+### temp hack: add VG parameters from Rosetta
+vg <- read.csv('Rosetta-parameters.csv.gz', stringsAsFactors = FALSE)
+# fix names and drop second column
+names(vg)[1] <- 'labsampnum'
+vg <- vg[, -2]
+# join
+h <- join(h, vg, by='labsampnum', type='left')
+
+
+
 ## export data for SoilWeb
 
 # print table defs

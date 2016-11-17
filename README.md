@@ -7,6 +7,7 @@ Snapshots:
  * NASIS morphologic data: 2016-04-20
 
 ## News
+* 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
 * 2016-01-15: added a new column with fragments (percent by weight) > 2mm. **use these values with caution**
@@ -107,6 +108,13 @@ Horizon Attributes:
   * estimated_c_to_n
   * ex_k_saturation
   * estimated_ph_h2o
+  * theta_r
+	* theta_s
+	* alpha
+	* npar
+	* Ks
+	* Ko
+	* Lpar
 
 
 Site/Pedon Attributes:

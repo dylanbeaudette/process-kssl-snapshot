@@ -30,6 +30,7 @@ source('extract-from-access-DB.R')
 source('extract-NASIS-morph-data-from-access-DB.R')
 
 ## clean-up data
+## NOTE: Rosetta parameters are spliced-in here
 # estimate pH 1:1 water, oc, om
 # saves 'lab' to 'cached-data/kssl-SPC.Rda'
 source('data-cleaning.R')
