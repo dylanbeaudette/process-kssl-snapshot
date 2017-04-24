@@ -17,6 +17,7 @@ ORDER BY pedon_key;"
 ## get hz data from KSSL snapshot
 ## 2014-09-18 adapted from the "Master Query" ##
 ## 2015-12-10 picking up new columns and replacing NULL CaCO3 will 0
+## 2017-04-24 must solve prep code issues before t3 will contain anything useful
 q.hz <- "SELECT
 NCSS_Pedon_Taxonomy.pedon_key, NCSS_Layer.labsampnum,
 hzn_top, hzn_bot, hzn_desgn, hzn_desgn_old,

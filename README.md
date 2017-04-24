@@ -7,7 +7,7 @@ Snapshots:
  * NASIS morphologic data: 2016-04-20
 
 ## News
-* 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation (807a518abb97f86c53b040b76740a28eb06d2af4)
+* 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation
 * 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
@@ -104,7 +104,7 @@ Horizon Attributes:
   * w15cly
   * cec7_cly
   * frags (weight percentage > 2mm)
-  * wrd_l2 (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties)
+  * wrd_l2 (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties) (see issue #4)
   * estimated_oc
   * estimated_om
   * estimated_c_to_n
@@ -153,15 +153,5 @@ Morphologic (field-described) Attributes:
   * pores (phpores table)
   * structure (phstructure)
 
-
-# TODO
-* update fetchKSSL and associated web-service to use JSON for all transfers
-* return snapshot dates in JSON data stream
-* write manual on KSSL processing steps, assumptions, models, etc.
-* solve problem with multiple (rows) prep codes (most common: "S","GP","HM") in the water retention and Db tables--this will require multiple queries to the Db table and cleaning of the results:
-  + S	air-dry	whole soil	The air-dried whole soil passing a 3 inch sieve
-  + GP	air-dry	whole soil	The air-dried whole soil including all coarse fragments
-  + M	moist	<2 mm	The moist soil passing a No. 10-mesh sieve kept in the moist state
-  + HM	air-dry	whole soil	The air-dried whole soil including all coarse fragments handled with stainless-steel or non-metallic equipment to reduce the contamination with heavy metals
 
 
