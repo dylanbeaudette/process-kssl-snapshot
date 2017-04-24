@@ -109,12 +109,12 @@ Horizon Attributes:
   * ex_k_saturation
   * estimated_ph_h2o
   * theta_r
-	* theta_s
-	* alpha
-	* npar
-	* Ks
-	* Ko
-	* Lpar
+  * theta_s
+  * alpha
+  * npar
+  * Ks
+  * Ko
+  * Lpar
 
 
 Site/Pedon Attributes:
