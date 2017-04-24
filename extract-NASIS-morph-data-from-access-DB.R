@@ -2,6 +2,7 @@
 
 ## data are exported as-is, with minimal processing, cleaning up and summary happens in a follow-up step
 
+## 2017-04-24: these queries no longer appear to work... switching over to new snapshots from Adolfo
 
 ## 2016-04-22: first version, procesing Analysis PC export DB
 
@@ -59,7 +60,7 @@ FROM
 
 
 # setup connections
-nasis.channel <- odbcConnectAccess('C:/Users/Dylan.Beaudette/Desktop/kssl_and_morph-web-service/analysis_pc_2.1_63600_pedons_April_2016.mdb', readOnlyOptimize=TRUE)
+nasis.channel <- odbcConnectAccess('S:/NRCS/Lab_Data/NCSS_Soil_Characterization_Database_09_6_2016.mdb', readOnlyOptimize=TRUE)
 
 # get data from KSSL snapshot
 s <- sqlQuery(nasis.channel, q.site, stringsAsFactors=FALSE)

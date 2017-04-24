@@ -28,10 +28,11 @@ ca_nh4 as ex_ca, mg_nh4 as ex_mg, na_nh4 as ex_na, k_nh4 as ex_k,
 ph_h2o, ph_cacl2, ph_kcl, ph_sp, gypl20, caco3, ec_12pre, sar, 
 oc, c_tot, n_tot, fe_dith, fe_ox,
 p_olsn, p_nz,
-db_13b, db_od, COLEws, 
-wrd_ws13 as whc, w3cld, w15l2, w15cly, cec7_cly, wpg2 as frags
+db_13b, db_od, COLEws,
+db.wrd_ws13 as whc, db.w3cld, db.w15l2, db.w15cly, cec7_cly, wpg2 as frags,
+t3.wrd_l2
 FROM 
-(((((((
+((((((((
 NCSS_Pedon_Taxonomy 
 LEFT OUTER JOIN NCSS_Layer ON NCSS_Pedon_Taxonomy.pedon_key = NCSS_Layer.pedon_key)
 LEFT OUTER JOIN CEC_and_Bases ON NCSS_Layer.labsampnum = CEC_and_Bases.labsampnum) 
@@ -39,6 +40,7 @@ LEFT OUTER JOIN PSDA_and_Rock_Fragments ON NCSS_Layer.labsampnum = PSDA_and_Rock
 LEFT OUTER JOIN Carbon_and_Extractions ON NCSS_Layer.labsampnum = Carbon_and_Extractions.labsampnum)
 LEFT OUTER JOIN ph_and_Carbonates ON NCSS_Layer.labsampnum = ph_and_Carbonates.labsampnum)
 LEFT OUTER JOIN (SELECT * FROM Bulk_Density_and_Moisture WHERE prep_code = 'S') AS db ON NCSS_Layer.labsampnum = db.labsampnum) 
+LEFT OUTER JOIN (SELECT * FROM Supplementary_Tier_3 WHERE prep_code = 'S') AS t3 ON NCSS_Layer.labsampnum = t3.labsampnum)
 LEFT OUTER JOIN Salt ON NCSS_Layer.labsampnum = Salt.labsampnum)
 LEFT OUTER JOIN Phosphorus ON NCSS_Layer.labsampnum = Phosphorus.labsampnum
 ORDER BY NCSS_Pedon_Taxonomy.pedon_key, hzn_top ASC;"

@@ -35,6 +35,8 @@ s$taxonname[unnamed.idx] <- s$sampled_as[unnamed.idx]
 idx <- which(!is.na(h$hzn_top) & is.na(h$hzn_bot))
 h$hzn_bot[idx] <- h$hzn_top[idx] + 1
 
+## TODO: we can do better than removing all of these O horizons
+## https://github.com/dylanbeaudette/process-kssl-snapshot/issues/3
 # remove O horizons where top > bottom
 bad.O.hz.idx <- which(h$hzn_top > h$hzn_bot)
 if(length(bad.O.hz.idx) > 0)
@@ -69,13 +71,12 @@ s <- join(s, s.sp@data[, c('pedon_key', 'state', 'mlra')])
 # compute ex-K saturation
 h$ex_k_saturation <- h$ex_k / h$base_sum
 
-# relace 0 C and N
+# relace "0" total C and N
 h$c_tot[which(h$c_tot == 0)] <- NA
 h$n_tot[which(h$n_tot == 0)] <- NA
 
-# replace missing CaCO3 with 0
 # organic matter and organic carbon
-h$estimated_oc <- with(h, c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12))
+h$estimated_oc <- with(h, ifelse(is.na(oc), c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12), oc))
 h$estimated_om <- with(h, estimated_oc * 1.724 )
 
 # estimate C:N 

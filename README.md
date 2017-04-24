@@ -7,6 +7,7 @@ Snapshots:
  * NASIS morphologic data: 2016-04-20
 
 ## News
+* 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation
 * 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
@@ -32,7 +33,7 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 ### Estimated Properties
 1. K saturation is computed via `ex_k / base_sum`
 2. total C and N values of 0 are replaced by NA
-3. organic C estimated via `c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12)`
+3. organic C estimated via `with(h, ifelse(is.na(oc), c_tot - (ifelse(is.na(caco3), 0, caco3) * 0.12), oc))`
 4. organic matter estimated via `estimated_oc * 1.724`
 5. C:N estimated via `h$estimated_oc / h$n_tot`
 6. pH (1:1 H2O) estimated when missing via saturated paste pH (pedotransfer function)
@@ -87,7 +88,7 @@ Horizon Attributes:
   * caco3
   * ec_12pre
   * sar
-  * oc
+  * oc (organic C, weight percent)
   * c_tot
   * n_tot
   * fe_dith
@@ -103,6 +104,7 @@ Horizon Attributes:
   * w15cly
   * cec7_cly
   * frags (weight percentage > 2mm)
+  * wrd_l2 (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties)
   * estimated_oc
   * estimated_om
   * estimated_c_to_n
@@ -156,7 +158,6 @@ Morphologic (field-described) Attributes:
 * update fetchKSSL and associated web-service to use JSON for all transfers
 * return snapshot dates in JSON data stream
 * write manual on KSSL processing steps, assumptions, models, etc.
-* locate water retention, Db, AWC, etc. from SoilVeg data in Access DB
 * solve problem with multiple (rows) prep codes (most common: "S","GP","HM") in the water retention and Db tables--this will require multiple queries to the Db table and cleaning of the results:
   + S	air-dry	whole soil	The air-dried whole soil passing a 3 inch sieve
   + GP	air-dry	whole soil	The air-dried whole soil including all coarse fragments

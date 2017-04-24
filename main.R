@@ -26,6 +26,7 @@ library(RPostgreSQL)
 source('extract-from-access-DB.R')
 
 ## extract NASIS morphologic data
+## 2017-04-24: these queries no longer appear to work... switching over to new snapshots from Adolfo
 # this saves files for upload to SoilWeb in the current working dir
 source('extract-NASIS-morph-data-from-access-DB.R')
 
