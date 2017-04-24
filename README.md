@@ -7,7 +7,7 @@ Snapshots:
  * NASIS morphologic data: 2016-04-20
 
 ## News
-* 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation
+* 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation (807a518abb97f86c53b040b76740a28eb06d2af4)
 * 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
 * 2016-04-22: added new code + web-service for basic NASIS morphologic data; data returned as JSON
