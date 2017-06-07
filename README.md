@@ -91,8 +91,10 @@ Horizon Attributes:
   * oc (organic C, weight percent)
   * c_tot
   * n_tot
-  * fe_dith
-  * fe_ox
+  * fe_dith (weight percent, <2mm fraction)
+  * fe_ox (weight percent, <2mm fraction)
+  * al_dith (weight percent, <2mm fraction)
+  * al_ox (weight percent, <2mm fraction) 
   * p_olsn
   * p_nz
   * db_13b

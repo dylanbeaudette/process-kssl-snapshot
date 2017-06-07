@@ -46,9 +46,10 @@ if(length(bad.O.hz.idx) > 0)
 ## 3. add MLRA and other important overlap information via spatial intersection
 # not all pedons have coordinates...
 
+## TODO: use a local copy of these data
 # national mlra boundary map, already GCS NAD83
-mlra <- readOGR(dsn='L:/Geodata/Boundaries', layer='mlra_v42')
-states <- readOGR(dsn='L:/Geodata/Boundaries', layer='statesp020')
+mlra <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/mlra/MLRA Boundaries', layer='mlra_v42')
+states <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/Boundaries', layer='statesp020')
 
 # keep only those profiles with coordinates
 s.sp <- subset(s, subset=!is.na(x))

@@ -27,7 +27,7 @@ sand_vf_psa as vfs, sand_f_psa as fs, sand_m_psa as ms, sand_c_psa as cs, sand_v
 acid_tea, base_sum, al_kcl, cec_nh4 as cec7, cec_sum as cec82, ecec, al_sat, bsecat AS bs82, bsesat AS bs7,
 ca_nh4 as ex_ca, mg_nh4 as ex_mg, na_nh4 as ex_na, k_nh4 as ex_k,
 ph_h2o, ph_cacl2, ph_kcl, ph_sp, gypl20, caco3, ec_12pre, sar, 
-oc, c_tot, n_tot, fe_dith, fe_ox,
+oc, c_tot, n_tot, fe_dith, fe_ox, al_dith, al_ox,
 p_olsn, p_nz,
 db_13b, db_od, COLEws,
 db.wrd_ws13 as whc, db.w3cld, db.w15l2, db.w15cly, cec7_cly, wpg2 as frags,
