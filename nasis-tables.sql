@@ -1,19 +1,19 @@
 CREATE TABLE "kssl.nasis_site" 
-( "pedlabsampnum" text,
+( "peiid" integer,
+	"pedlabsampnum" text,
 	"geomposhill" text,
 	"geomposmntn" text,
 	"geompostrce" text,
 	"geomposflats" text,
 	"hillslopeprof" text,
 	"geomslopeseg" text,
-	"bedrckkind" text,
-	"bedrckhardness" text,
 	"pmgroupname" text,
 	"drainagecl" text 
 )
 
 CREATE TABLE "kssl.nasis_phcolor" 
-( "labsampnum" text,
+( "phiid" integer,
+	"labsampnum" text,
 	"colorpct" integer,
 	"colorhue" text,
 	"colorvalue" float8,
@@ -22,8 +22,9 @@ CREATE TABLE "kssl.nasis_phcolor"
 )
 
 CREATE TABLE "kssl.nasis_phfrags" 
-( "labsampnum" text,
-	"fragvol" integer,
+( "phiid" integer,
+	"labsampnum" text,
+	"fragvol" float8,
 	"fragkind" text,
 	"fragsize_l" integer,
 	"fragsize_r" integer,
@@ -34,15 +35,16 @@ CREATE TABLE "kssl.nasis_phfrags"
 )
 
 CREATE TABLE "kssl.nasis_phpores" 
-( "labsampnum" text,
+( "phiid" integer,
+	"labsampnum" text,
 	"poreqty" float8,
 	"poresize" text,
-	"porecont" text,
 	"poreshp" text 
 )
 
 CREATE TABLE "kssl.nasis_phstructure" 
-( "labsampnum" text,
+( "phiid" integer,
+	"labsampnum" text,
 	"structgrade" text,
 	"structsize" text,
 	"structtype" text,

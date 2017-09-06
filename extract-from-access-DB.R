@@ -1,4 +1,4 @@
-#### This requires 32bit R and libraries ...
+## TODO: convert this to use the new SQLite DB via Adolfo's FGDB
 
 
 ## get site data from the KSSL snapshot

@@ -128,6 +128,7 @@ h$bs82[which(h$bs82 < 0)] <- NA
 # estimating BS82 from BS7 doesn't work at the national-scale
 
 
+stop('## TODO: these are now in the KSSL SQLite database')
 ### temp hack: add VG parameters from Rosetta
 vg <- read.csv('Rosetta-parameters.csv.gz', stringsAsFactors = FALSE)
 # fix names and drop second column
