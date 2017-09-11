@@ -61,14 +61,14 @@ lab$bs82.method[missing.bs82] <- 'estimated'
 
 
 ## save to CSV file for others
-write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-september-2016.csv', row.names=FALSE)
+write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-september-2017.csv', row.names=FALSE)
 
 # init coordinates
 coordinates(lab) <- ~ x + y
 proj4string(lab) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 ## save result to Rda object for later
-save(lab, file='S:/NRCS/Lab_Data/kssl-ca-september-2016.Rda')
+save(lab, file='S:/NRCS/Lab_Data/kssl-ca-september-2017.Rda')
 
 ## graphical check: OK
 png(file='S:/NRCS/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
@@ -76,22 +76,22 @@ par(mar=c(0,0,3,0))
 map('county', 'California')
 plot(mlra[mlra$MLRARSYM %in% c('17', '18', '22A'), ], border='blue', add=TRUE)
 plot(as(lab, 'SpatialPoints'), add=TRUE, col='red', cex=0.25)
-title('September 2016')
+title('September 2017')
 dev.off()
 
 
 ## save select attributes to SHP
-writeOGR(as(lab, 'SpatialPointsDataFrame')[, c('pedon_id', 'taxonname')], dsn='L:/Geodata/UCD_NCSS', layer='mlra_17_18_22-lab_data', driver='ESRI Shapefile', overwrite_layer=TRUE)
+writeOGR(as(lab, 'SpatialPointsDataFrame')[, c('pedon_id', 'taxonname')], dsn='L:/NRCS/MLRAShared/Geodata/UCD_NCSS', layer='mlra_17_18_22-lab_data', driver='ESRI Shapefile', overwrite_layer=TRUE)
 
 ## aggregate some soil properties for all profiles by MLRA, along 1 cm slices
-a <- slab(lab, mlra ~ clay + ex_k_saturation + estimated_ph_h2o + bs82)
+a <- slab(lab, mlra ~ clay + ex_k_saturation + estimated_ph_h2o + bs82 + estimated_om)
 
 # adjust factor labels for MLRA to include number of pedons
 pedons.per.mlra <- tapply(site(lab)$mlra, site(lab)$mlra, length)
 a$mlra <- factor(a$mlra, levels=names(pedons.per.mlra), labels=paste(names(pedons.per.mlra), ' (', pedons.per.mlra, ' profiles)', sep=''))
 
 # re-name variables
-a$variable <- factor(a$variable, labels=c('Clay %', 'Ex-K Saturation', 'pH 1:1 Water', 'Base Sat. pH 8.2'))
+a$variable <- factor(a$variable, labels=c('Clay %', 'Ex-K Saturation', 'pH 1:1 Water', 'Base Sat. pH 8.2', 'O.M. %'))
 
 # make some nice colors
 cols <- brewer.pal('Set1', n=3)

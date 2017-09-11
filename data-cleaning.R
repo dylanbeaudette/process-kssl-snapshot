@@ -48,8 +48,8 @@ if(length(bad.O.hz.idx) > 0)
 
 ## TODO: use a local copy of these data
 # national mlra boundary map, already GCS NAD83
-mlra <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/mlra/MLRA Boundaries', layer='mlra_v42')
-states <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/Boundaries', layer='statesp020')
+mlra <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/mlra/MLRA Boundaries', layer='mlra_v42', stringsAsFactors = FALSE)
+states <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/Boundaries', layer='statesp020', stringsAsFactors = FALSE)
 
 # keep only those profiles with coordinates
 s.sp <- subset(s, subset=!is.na(x))
@@ -125,17 +125,7 @@ h$bs82.computed <- NULL
 # remove negative values
 h$bs82[which(h$bs82 < 0)] <- NA
 
-# estimating BS82 from BS7 doesn't work at the national-scale
-
-
-stop('## TODO: these are now in the KSSL SQLite database')
-### temp hack: add VG parameters from Rosetta
-vg <- read.csv('Rosetta-parameters.csv.gz', stringsAsFactors = FALSE)
-# fix names and drop second column
-names(vg)[1] <- 'labsampnum'
-vg <- vg[, -2]
-# join
-h <- join(h, vg, by='labsampnum', type='left')
+# NOTE: estimating BS82 from BS7 doesn't work at the national-scale
 
 
 

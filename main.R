@@ -20,8 +20,8 @@ library(RPostgreSQL)
 ## !!! filtering based on prep code may exclude some good data !!! figure this out
 
 
-## extract data from Access DB
-# This requires 32bit R and libraries ...
+## LIMS horizon data
+## 2017-09-11: now based on SQLite DB
 # saves 's' and 'h' to 'S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda'
 source('process-KSSL-data.R')
 
@@ -31,7 +31,6 @@ source('process-KSSL-data.R')
 source('process-NASIS-morph-data.R')
 
 ## clean-up data
-## NOTE: Rosetta parameters are spliced-in here
 # estimate pH 1:1 water, oc, om
 # saves 'lab' to 'cached-data/kssl-SPC.Rda'
 source('data-cleaning.R')

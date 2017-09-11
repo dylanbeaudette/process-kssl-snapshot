@@ -17,7 +17,7 @@ ORDER BY peiidref;"
 
 ## basic NASIS site data
 q.site <- "SELECT
-peiid, pedlabsampnum, geomposhill, geomposmntn, geompostrce, geomposflats, hillslopeprof, geomslopeseg, pmgroupname, drainagecl
+peiid, pedlabsampnum, upedonid AS pedon_id, usiteid as site_id, geomposhill, geomposmntn, geompostrce, geomposflats, hillslopeprof, geomslopeseg, pmgroupname, drainagecl, longstddecimalde as x, latstddecimaldeg AS y
 FROM 
 pedon 
 LEFT OUTER JOIN siteobs ON pedon.siteobsiidref = siteobs.siteobsiid
@@ -66,7 +66,7 @@ ORDER BY phiid;"
 db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/text-file-to-sqlite/NASIS-pedons.sqlite")
 
 # reformat raw data and return as DF
-s <- dbGetQuery(db, q.site)
+nasis.site <- dbGetQuery(db, q.site)
 h.color <- dbGetQuery(db, q.color)
 h.frags <- dbGetQuery(db, q.frags)
 h.pores <- dbGetQuery(db, q.pores)
@@ -79,8 +79,10 @@ h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
 best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text')
 
 
+### SoilWeb related ###
+
 # create table defs-- these will likely need to be modified
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=s[1, ], row.names=FALSE), file='nasis-tables.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='nasis-tables.sql')
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phcolor', obj=h.color[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
@@ -99,12 +101,11 @@ cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_taxhistory', o
 
 
 # save to CSV files for upload to soilweb
-write.csv(s, file=gzfile('kssl-nasis-site.csv.gz'), row.names=FALSE)
+write.csv(nasis.site, file=gzfile('kssl-nasis-site.csv.gz'), row.names=FALSE)
 write.csv(h.color, file=gzfile('kssl-nasis-phcolor.csv.gz'), row.names=FALSE)
 write.csv(h.frags, file=gzfile('kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
 write.csv(h.pores, file=gzfile('kssl-nasis-phpores.csv.gz'), row.names=FALSE)
 write.csv(h.structure, file=gzfile('kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
 write.csv(best.tax.data, file=gzfile('kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
-
 
 
