@@ -29,16 +29,16 @@ t3.wrd_l2 as wrd_l2,
 theta_r, theta_s, alpha, npar, Ks, Ko, Lpar
 FROM
 NCSS_Pedon_Taxonomy 
-LEFT OUTER JOIN NCSS_Layer ON NCSS_Pedon_Taxonomy.pedon_key = NCSS_Layer.pedon_key
-LEFT OUTER JOIN CEC_and_Bases ON NCSS_Layer.labsampnum = CEC_and_Bases.labsampnum
-LEFT OUTER JOIN PSDA_and_Rock_Fragments ON NCSS_Layer.labsampnum = PSDA_and_Rock_Fragments.labsampnum
-LEFT OUTER JOIN Carbon_and_Extractions ON NCSS_Layer.labsampnum = Carbon_and_Extractions.labsampnum
-LEFT OUTER JOIN ph_and_Carbonates ON NCSS_Layer.labsampnum = ph_and_Carbonates.labsampnum
-LEFT OUTER JOIN (SELECT * FROM Bulk_Density_and_Moisture WHERE prep_code = 'S') AS db ON NCSS_Layer.labsampnum = db.labsampnum
-LEFT OUTER JOIN (SELECT * FROM Supplementary_Tier_3 WHERE prep_code = 'S') AS t3 ON NCSS_Layer.labsampnum = t3.labsampnum
-LEFT OUTER JOIN Salt ON NCSS_Layer.labsampnum = Salt.labsampnum
-LEFT OUTER JOIN Phosphorus ON NCSS_Layer.labsampnum = Phosphorus.labsampnum
-LEFT OUTER JOIN Rosetta_Parameters ON NCSS_Layer.labsampnum = Rosetta_Parameters.labsampnum
+LEFT JOIN NCSS_Layer ON NCSS_Pedon_Taxonomy.pedon_key = NCSS_Layer.pedon_key
+LEFT JOIN CEC_and_Bases ON NCSS_Layer.labsampnum = CEC_and_Bases.labsampnum
+LEFT JOIN PSDA_and_Rock_Fragments ON NCSS_Layer.labsampnum = PSDA_and_Rock_Fragments.labsampnum
+LEFT JOIN Carbon_and_Extractions ON NCSS_Layer.labsampnum = Carbon_and_Extractions.labsampnum
+LEFT JOIN ph_and_Carbonates ON NCSS_Layer.labsampnum = ph_and_Carbonates.labsampnum
+LEFT JOIN (SELECT * FROM Bulk_Density_and_Moisture WHERE prep_code = 'S') AS db ON NCSS_Layer.labsampnum = db.labsampnum
+LEFT JOIN (SELECT * FROM Supplementary_Tier_3 WHERE prep_code = 'S') AS t3 ON NCSS_Layer.labsampnum = t3.labsampnum
+LEFT JOIN Salt ON NCSS_Layer.labsampnum = Salt.labsampnum
+LEFT JOIN Phosphorus ON NCSS_Layer.labsampnum = Phosphorus.labsampnum
+LEFT JOIN Rosetta_Parameters ON NCSS_Layer.labsampnum = Rosetta_Parameters.labsampnum
 ORDER BY NCSS_Pedon_Taxonomy.pedon_key, hzn_top ASC;"
 
 ## TODO: there are several truncated fields in here... related to FGDB -> TXT export
@@ -50,7 +50,9 @@ pedon_key, pedlabsampnum, upedonid AS pedon_id,
 longitude_decima as x, latitude_decimal as y, 
 samp_name AS sampled_as, corr_name AS correlated_as,
 corr_class_type as correlated_taxon_kind,
-cntrl_depth_to_t as pscs_top, cntrl_depth_to_b as pscs_bottom, pedon_completene AS pedon_completeness_index
+cntrl_depth_to_t as pscs_top, cntrl_depth_to_b as pscs_bottom, pedon_completene AS pedon_completeness_index,
+-- adding this until we get the NASIS side fixed
+SSL_taxsubgrp as ssl_taxsubgroup
 FROM NCSS_Pedon_Taxonomy
 ORDER BY pedon_key;"
 
