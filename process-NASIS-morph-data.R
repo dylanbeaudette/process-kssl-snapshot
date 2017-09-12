@@ -5,27 +5,44 @@
 
 
 ## TODO:
+
+# !!! remove pedon "copies": multiple peiid / pedlabsampnum
+
 # 1. parent material
 # 2. bedrock
 # 3. geomorphology
-# 4. spatial data
+# 4. duplicates rows from FGDB export (https://github.com/ncss-tech/lab-data-delivery/issues/5) -- use DISTINCT for now
 
 ## taxonomic history
-q.taxa <- "SELECT peiidref as peiid, classdate, classtype, taxonname, localphase, taxonkind, taxorder, taxsuborder, taxgrtgroup, taxsubgrp, taxpartsize, taxpartsizemod, taxceactcl, taxreaction, taxtempcl, taxmoistscl, taxtempregime, soiltaxedition, psctopdepth, pscbotdepth, osdtypelocflag
+q.taxa <- "SELECT DISTINCT
+peiidref as peiid, classdate, classtype, taxonname, localphase, taxonkind, taxorder, taxsuborder, taxgrtgroup, taxsubgrp, taxpartsize, taxpartsizemod, taxceactcl, taxreaction, taxtempcl, taxmoistscl, taxtempregime, soiltaxedition, psctopdepth, pscbotdepth, osdtypelocflag
 FROM petaxhistory
 ORDER BY peiidref;"
 
 ## basic NASIS site data
-q.site <- "SELECT
-peiid, pedlabsampnum, upedonid AS pedon_id, usiteid as site_id, geomposhill, geomposmntn, geompostrce, geomposflats, hillslopeprof, geomslopeseg, pmgroupname, drainagecl, longstddecimalde as x, latstddecimaldeg AS y
-FROM 
-pedon 
-LEFT OUTER JOIN siteobs ON pedon.siteobsiidref = siteobs.siteobsiid
-LEFT OUTER JOIN site ON site.siteiid = siteobs.siteiidref
-ORDER BY peiid;"
+# adapted from soilDB queries
+q.site <- "SELECT DISTINCT siteiid AS siteiid, peiid, usiteid as site_id, upedonid as pedon_id, pedlabsampnum, labdatadescflag,
+obsdate,
+longstddecimalde as x, latstddecimaldeg as y, gpspositionalerr, 
+bedrckdepth, bedrckkind, bedrckhardness,
+shapeacross, shapedown, geomposhill, geomposmntn, geompostrce, geomposflats, hillslopeprof, geomslopeseg, 
+pmgroupname, drainagecl
+FROM
+site 
+INNER JOIN siteobs ON site.siteiid = siteobs.siteiidref
+LEFT JOIN pedon ON siteobs.siteobsiid = pedon.siteobsiidref
+LEFT JOIN 
+(
+  SELECT siteiidref, bedrckdepth, bedrckkind, bedrckhardness
+  FROM sitebedrock
+  ORDER BY bedrckdepth ASC
+  LIMIT 1
+) as sb ON site.siteiid = sb.siteiidref
+  
+  ORDER BY pedon.peiid ;"
 
 ## color data
-q.color <- "SELECT
+q.color <- "SELECT DISTINCT
 phiid, labsampnum, colorpct, colorhue, colorvalue, colorchroma, colormoistst
 FROM
 phorizon 
@@ -34,7 +51,7 @@ LEFT JOIN phsample ON phorizon.phiid = phsample.phiidref
 ORDER BY phiid;"
 
 ## rock fragment data
-q.frags <- "SELECT
+q.frags <- "SELECT DISTINCT
 phiid, labsampnum, fragvol, fragkind, fragsize_l, fragsize_r, fragsize_h, fragshp, fraground, fraghard
 FROM
 phorizon 
@@ -43,7 +60,7 @@ LEFT JOIN phsample ON phorizon.phiid = phsample.phiidref
 ORDER BY phiid;"
 
 ## pores
-q.pores <- "SELECT
+q.pores <- "SELECT DISTINCT
 phiid, labsampnum, poreqty, poresize, poreshp
 FROM
 phorizon 
@@ -53,7 +70,7 @@ ORDER BY labsampnum;"
 
 
 ## structure
-q.structure <- "SELECT
+q.structure <- "SELECT DISTINCT
 phiid, labsampnum, structgrade, structsize, structtype, structid, structpartsto
 FROM
 phorizon 
@@ -73,11 +90,7 @@ h.pores <- dbGetQuery(db, q.pores)
 h.structure <- dbGetQuery(db, q.structure)
 h.taxa <- dbGetQuery(db, q.taxa)
 
-## TODO: this is very slow ~ 20 minutes
-# select the most relevant taxonomic record
-h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
-best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text')
-
+dbDisconnect(db)
 
 ### SoilWeb related ###
 
@@ -106,6 +119,19 @@ write.csv(h.color, file=gzfile('kssl-nasis-phcolor.csv.gz'), row.names=FALSE)
 write.csv(h.frags, file=gzfile('kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
 write.csv(h.pores, file=gzfile('kssl-nasis-phpores.csv.gz'), row.names=FALSE)
 write.csv(h.structure, file=gzfile('kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
+
+
+## not sure if this is any faster, and it isn't working... study time
+# library(data.table)
+# DT <- data.table(h.taxa, key='peiid')
+# best.tax.data <- DT[, .pickBestTaxHistory(.SD), by='peiid']
+
+## process tax history: 1 row / peiid
+## this is very slow ~ 40 minutes
+# select the most relevant taxonomic record
+h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
+system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text'))
+
 write.csv(best.tax.data, file=gzfile('kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
 
 
