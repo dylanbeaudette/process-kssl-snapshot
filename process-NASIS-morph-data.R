@@ -12,6 +12,10 @@
 # 2. bedrock
 # 3. geomorphology
 # 4. duplicates rows from FGDB export (https://github.com/ncss-tech/lab-data-delivery/issues/5) -- use DISTINCT for now
+# 5. duplicates in these queries can be caused by two things:
+#     - duplicates in NASIS
+#     - apparent duplicates due to errors / lack of table primary keys in query results
+#       see: 
 
 ## taxonomic history
 q.taxa <- "SELECT DISTINCT
@@ -21,7 +25,7 @@ ORDER BY peiidref;"
 
 ## basic NASIS site data
 # adapted from soilDB queries
-q.site <- "SELECT DISTINCT siteiid AS siteiid, peiid, usiteid as site_id, upedonid as pedon_id, pedlabsampnum, labdatadescflag,
+q.site <- "SELECT DISTINCT siteiid, peiid, usiteid as site_id, upedonid as pedon_id, pedlabsampnum, labdatadescflag,
 obsdate,
 longstddecimalde as x, latstddecimaldeg as y, gpspositionalerr, 
 bedrckdepth, bedrckkind, bedrckhardness,
