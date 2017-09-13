@@ -3,11 +3,11 @@
 I periodically "process" the NCSS-KSSL characterization data snapshot (usually quarterly) into a consolidated chunk of data that are used within [SoilWeb](casoilresource.lawr.ucdavis.edu/sde/?series=auburn) and by [`fetchKSSL()`](http://ncss-tech.github.io/AQP/soilDB/KSSL-demo.html). This snapshot is typically delivered as an Access database and contains a mixture of: the latest "lab" data from LIMS, and the latest taxonomic and spatial data from NASIS. The resulting "processed" data include over 50 attributes, split into chunks that roughly approximate the "site/pedon" and "horizon" objects.
 
 Snapshots:
- * KSSL lab, taxonomic, and location data: 2017-09-11
- * NASIS morphologic data: 2017-09-11
+ * KSSL lab, taxonomic, and location data: 2017-09-13
+ * NASIS morphologic data: 2017-09-13
 
 ## News
-* 2017-09-11: complete overhaul, now based on FGDB -> TXT -> SQLite workflow
+* 2017-09-13: complete overhaul, now based on FGDB -> TXT -> SQLite workflow
 * 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation
 * 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
@@ -89,7 +89,7 @@ Horizon Attributes:
   * caco3
   * ec_12pre
   * sar
-  * oc (organic C, weight percent) **all NA**
+  * oc (organic C, weight percent)
   * c_tot
   * n_tot
   * fe_dith (weight percent, <2mm fraction)
@@ -135,6 +135,7 @@ Site/Pedon Attributes:
   * pscs_top
   * pscs_bottom
   * pedon_completeness_index
+  * ssl_taxsubgroup
   * taxonname
   * state
   * mlra
