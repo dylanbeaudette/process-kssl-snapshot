@@ -64,6 +64,16 @@ db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/tex
 h <- dbGetQuery(db, q.hz)
 s <- dbGetQuery(db, q.site)
 
+# save table description for QC
+sink(file='QC/horizon-descripton.txt')
+Hmisc::describe(h)
+sink()
+
+sink(file='QC/site-descripton.txt')
+Hmisc::describe(s)
+sink()
+
+
 # save cached data for next steps
 save(s, h, file='S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
 
