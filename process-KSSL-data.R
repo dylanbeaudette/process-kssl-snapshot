@@ -65,6 +65,7 @@ h <- dbGetQuery(db, q.hz)
 s <- dbGetQuery(db, q.site)
 
 # save table description for QC
+options(width=160)
 sink(file='QC/horizon-descripton.txt')
 Hmisc::describe(h)
 sink()
