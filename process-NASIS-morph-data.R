@@ -30,7 +30,8 @@ obsdate,
 longstddecimalde as x, latstddecimaldeg as y, gpspositionalerr, 
 bedrckdepth, bedrckkind, bedrckhardness,
 shapeacross, shapedown, geomposhill, geomposmntn, geompostrce, geomposflats, hillslopeprof, geomslopeseg, 
-pmgroupname, drainagecl
+pmgroupname, drainagecl,
+objwlupdated
 FROM
 site 
 INNER JOIN siteobs ON site.siteiid = siteobs.siteiidref
@@ -98,6 +99,22 @@ dbDisconnect(db)
 
 ### SoilWeb related ###
 
+
+## not sure if this is any faster, and it isn't working... study time
+# library(data.table)
+# DT <- data.table(h.taxa, key='peiid')
+# best.tax.data <- DT[, .pickBestTaxHistory(.SD), by='peiid']
+
+## process tax history: 1 row / peiid
+## this is very slow ~ 40 minutes
+# select the most relevant taxonomic record
+h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
+system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text'))
+
+write.csv(best.tax.data, file=gzfile('kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
+
+
+
 # create table defs-- these will likely need to be modified
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='nasis-tables.sql')
 
@@ -125,17 +142,5 @@ write.csv(h.pores, file=gzfile('kssl-nasis-phpores.csv.gz'), row.names=FALSE)
 write.csv(h.structure, file=gzfile('kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
 
 
-## not sure if this is any faster, and it isn't working... study time
-# library(data.table)
-# DT <- data.table(h.taxa, key='peiid')
-# best.tax.data <- DT[, .pickBestTaxHistory(.SD), by='peiid']
-
-## process tax history: 1 row / peiid
-## this is very slow ~ 40 minutes
-# select the most relevant taxonomic record
-h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
-system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text'))
-
-write.csv(best.tax.data, file=gzfile('kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
 
 
