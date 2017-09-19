@@ -8,7 +8,7 @@ Snapshots:
 
 ## News
 * 2017-09-13: new KSSL / NASIS snapshot from September 2017 (64153 pedons, 413385 horizons)
-* 2017-09-11: complete overhaul, now based on FGDB -> TXT -> SQLite workflow
+* 2017-09-11: complete overhaul, now based on [FGDB -> TXT -> SQLite workflow](https://github.com/ncss-tech/lab-data-delivery/)
 * 2017-04-24: fixed 2 major bugs: 1) data were shifted to the right by one column after "frags", 2) smarter estimated OC calculation
 * 2016-11-17: added VG parameters estimated by [Rosetta](https://www.ars.usda.gov/pacific-west-area/riverside-ca/us-salinity-laboratory/docs/)
 * 2016-09-06: new KSSL snapshot from 2016-09-06 (63571 pedons, 408290 horizons)
