@@ -1,6 +1,6 @@
 
 # load cached data
-load('S:/NRCS/Lab_Data/cached-data/kssl-SPC.Rda')
+load('S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/cached-data/kssl-SPC.Rda')
 
 
 #### subset Sonora Office stuff here:
@@ -44,7 +44,7 @@ dev.off()
 sqrt(mean((predict(l.bs, horizons(lab)) - lab$bs82)^2, na.rm = TRUE))
 
 # save model for others... could probably use some work
-save(l.bs, file='S:/NRCS/Lab_Data/mlra-17-18-22A-BS82-model.Rda')
+save(l.bs, file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/mlra-17-18-22A-BS82-model.Rda')
 
 # re-index missing values, that CAN BE predicted from BS7
 missing.bs82 <- which(is.na(lab$bs82) & !is.na(lab$bs7) & lab$bs7 < 100)
@@ -61,17 +61,17 @@ lab$bs82.method[missing.bs82] <- 'estimated'
 
 
 ## save to CSV file for others
-write.csv(as(lab, 'data.frame'), file='S:/NRCS/Lab_Data/kssl-ca-september-2017.csv', row.names=FALSE)
+write.csv(as(lab, 'data.frame'), file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/kssl-ca-september-2017.csv', row.names=FALSE)
 
 # init coordinates
 coordinates(lab) <- ~ x + y
 proj4string(lab) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 ## save result to Rda object for later
-save(lab, file='S:/NRCS/Lab_Data/kssl-ca-september-2017.Rda')
+save(lab, file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/kssl-ca-september-2017.Rda')
 
 ## graphical check: OK
-png(file='S:/NRCS/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
+png(file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/sample-locations.png', width=600, height=800, antialias = 'cleartype')
 par(mar=c(0,0,3,0))
 map('county', 'California')
 plot(mlra[mlra$MLRARSYM %in% c('17', '18', '22A'), ], border='blue', add=TRUE)
