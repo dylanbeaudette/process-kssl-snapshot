@@ -99,7 +99,7 @@ cols <- brewer.pal('Set1', n=3)
 # plot: nice
 png(file='S:/NRCS/Lab_Data/properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
 print(xyplot(
-  top ~ p.q50 | variable, groups=mlra, data=a, lower=a$p.q25, upper=a$p.q75, 
+  top ~ p.q50 | variable, groups=mlra, data=a, lower=a$p.q25, upper=a$p.q75, layout=c(5, 1),
   ylim=c(170,-5), alpha=0.25, scales=list(y=list(tick.num=7, alternating=3), x=list(relation='free',alternating=1)),
   panel=panel.depth_function, prepanel=prepanel.depth_function, sync.colors=TRUE, asp=1.5,
   ylab='Depth (cm)', xlab='median bounded by 25th and 75th percentiles', strip=strip.custom(bg=grey(0.85)), cf=a$contributing_fraction,

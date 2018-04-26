@@ -18,11 +18,12 @@ library(RPostgreSQL)
 ## LIMS horizon data
 ## 2017-09-11: now based on SQLite DB
 # saves 's' and 'h' to 'S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda'
+# this saves files for upload to SoilWeb export/
 source('process-KSSL-data.R')
 
 ## extract NASIS morphologic data
 ## 2017-09-06: now based on SQLite DB
-# this saves files for upload to SoilWeb in the current working dir
+# this saves files for upload to SoilWeb export/
 source('process-NASIS-morph-data.R')
 
 ## clean-up data
