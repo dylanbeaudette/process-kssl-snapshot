@@ -1,3 +1,5 @@
+
+> Hmisc::describe(s)
 s 
 
  12  Variables      64153  Observations
@@ -85,3 +87,5 @@ ssl_taxsubgroup
 lowest : abruptic argiaquolls        abruptic argiborolls        abruptic aridic argixerolls abruptic aridic durixerolls abruptic cryic paleborolls 
 highest: xerollic haplargids         xerollic nadurargids        xerollic natrargids         xerollic paleargids         xerollic paleorthids       
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> sink()
