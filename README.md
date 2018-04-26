@@ -4,7 +4,7 @@ I periodically "process" the NCSS-KSSL characterization data snapshot (usually q
 
 Snapshots:
  * KSSL lab, taxonomic, and location data: 2017-09-13 [QC results](https://github.com/dylanbeaudette/process-kssl-snapshot/tree/master/QC)
- * NASIS morphologic data: 2017-09-13
+ * NASIS morphologic data: 2018-04-15
 
 ## News
 * 2018-04-26: now more `wrd_l2` values, thanks to Jacob Isleib, closes [issue #4](https://github.com/dylanbeaudette/process-kssl-snapshot/issues/4)

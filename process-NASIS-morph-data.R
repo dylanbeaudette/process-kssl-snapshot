@@ -1,4 +1,5 @@
 
+## 2018-04-26: new snapshot
 ## 2017-09-06: first cut at reading SQLite snapshot based on Adolfo's products
 ## 2017-04-24: these queries no longer appear to work... switching over to new snapshots from Adolfo
 ## 2016-04-22: first version, procesing Analysis PC export DB
@@ -85,7 +86,7 @@ ORDER BY phiid;"
 
 
 # setup connection to SQLite DB from FGDB export
-db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/text-file-to-sqlite/NASIS-pedons.sqlite")
+db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/text-file-to-sqlite/NASIS-data.sqlite")
 
 # reformat raw data and return as DF
 nasis.site <- dbGetQuery(db, q.site)
@@ -114,8 +115,8 @@ system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory
 write.csv(best.tax.data, file=gzfile('export/kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
 
 
-
-# create table defs-- these will likely need to be modified
+## manual intervention: taxonname must be converted to citext
+# approximate table defs
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql')
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
