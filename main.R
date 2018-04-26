@@ -9,16 +9,11 @@ library(rms)
 library(RPostgreSQL)
 
 
-## TODO: the Bulk_Density_and_Moisture table as some data split over multiple rows, filtering for now using prep_code = 'S'
-
 ## TODO: flag and fix pedons with bad horizonation
 ## CA Data NOTE: MLRA derived from the site area overlap table cannot be trusted
 ## CA Data NOTE: SoilVeg pedons have saturated paste pH...
 ## CA Data NOTE: missing bs82 estimated via bs7
 ## CA Data NOTE: C and N values of 0 are replaced with NA
-
-## !!! filtering based on prep code may exclude some good data !!! figure this out
-
 
 ## LIMS horizon data
 ## 2017-09-11: now based on SQLite DB

@@ -12,6 +12,7 @@
 # 2017-04-24 must solve prep code issues before t3 will contain anything useful
 # 2017-09-11 now using SQLite version of LIMS snapshot
 # 2017-09-12 using DISTINCT to filter out some duplicate records
+# 2018-04-25 more intelligent filtering of Tier_3 table, ignores prep code (https://github.com/dylanbeaudette/process-kssl-snapshot/issues/4)
 q.hz <- "SELECT DISTINCT
 NCSS_Pedon_Taxonomy.pedon_key AS pedon_key, NCSS_Layer.labsampnum AS labsampnum,
 hzn_top, hzn_bot, hzn_desgn, hzn_desgn_old,
