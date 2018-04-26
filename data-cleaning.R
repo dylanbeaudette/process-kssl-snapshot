@@ -1,6 +1,6 @@
 
 # load cached data
-load('S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
+load('S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
 
 
 ## QC
@@ -132,12 +132,12 @@ h$bs82[which(h$bs82 < 0)] <- NA
 ## export data for SoilWeb
 
 # print table defs
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.site', obj=s[1, ], row.names=FALSE), file='S:/NRCS/Lab_Data/site.sql')
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.horizon', obj=h[1, ], row.names=FALSE), file='S:/NRCS/Lab_Data/hz.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.site', obj=s[1, ], row.names=FALSE), file='table-defs/site.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.horizon', obj=h[1, ], row.names=FALSE), file='table-defs/hz.sql')
 
 # save raw, minimally processed data
-write.csv(s, file=gzfile('S:/NRCS/Lab_Data/kssl-site.csv.gz'), row.names=FALSE)
-write.csv(h, file=gzfile('S:/NRCS/Lab_Data/kssl-horizon.csv.gz'), row.names=FALSE)
+write.csv(s, file=gzfile('export/kssl-site.csv.gz'), row.names=FALSE)
+write.csv(h, file=gzfile('export/kssl-horizon.csv.gz'), row.names=FALSE)
 
 ## upgrade to SoilProfilecollection
 lab <- h
@@ -147,5 +147,5 @@ depths(lab) <- pedon_key ~ hzn_top + hzn_bot
 site(lab) <- s
 
 # cache for later
-save(lab, file='S:/NRCS/Lab_Data/cached-data/kssl-SPC.Rda')
+save(lab, file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/cached-data/kssl-SPC.Rda')
 

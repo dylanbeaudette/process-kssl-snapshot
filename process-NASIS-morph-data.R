@@ -111,35 +111,35 @@ dbDisconnect(db)
 h.taxa$classdate <- as.Date(h.taxa$classdate, format="%m/%d/%Y")
 system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory, .progress='text'))
 
-write.csv(best.tax.data, file=gzfile('kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
+write.csv(best.tax.data, file=gzfile('export/kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
 
 
 
 # create table defs-- these will likely need to be modified
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='nasis-tables.sql')
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql')
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phcolor', obj=h.color[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phcolor', obj=h.color[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phfrags', obj=h.frags[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phfrags', obj=h.frags[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phpores', obj=h.pores[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phpores', obj=h.pores[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phstructure', obj=h.structure[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phstructure', obj=h.structure[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 cat('\n\n', file='nasis-tables.sql', append = TRUE)
-cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_taxhistory', obj=best.tax.data[1, ], row.names=FALSE), file='nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_taxhistory', obj=best.tax.data[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 
 # save to CSV files for upload to soilweb
-write.csv(nasis.site, file=gzfile('kssl-nasis-site.csv.gz'), row.names=FALSE)
-write.csv(h.color, file=gzfile('kssl-nasis-phcolor.csv.gz'), row.names=FALSE)
-write.csv(h.frags, file=gzfile('kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
-write.csv(h.pores, file=gzfile('kssl-nasis-phpores.csv.gz'), row.names=FALSE)
-write.csv(h.structure, file=gzfile('kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
+write.csv(nasis.site, file=gzfile('export/kssl-nasis-site.csv.gz'), row.names=FALSE)
+write.csv(h.color, file=gzfile('export/kssl-nasis-phcolor.csv.gz'), row.names=FALSE)
+write.csv(h.frags, file=gzfile('export/kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
+write.csv(h.pores, file=gzfile('export/kssl-nasis-phpores.csv.gz'), row.names=FALSE)
+write.csv(h.structure, file=gzfile('export/kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
 
 
 

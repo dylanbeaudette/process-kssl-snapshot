@@ -77,7 +77,7 @@ sink()
 
 
 # save cached data for next steps
-save(s, h, file='S:/NRCS/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
+save(s, h, file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/cached-data/kssl-site-and-horizon-data.Rda')
 
 dbDisconnect(db)
 
