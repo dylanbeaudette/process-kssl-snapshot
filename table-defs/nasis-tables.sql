@@ -66,3 +66,27 @@ CREATE TABLE "kssl.nasis_phstructure"
 	"structpartsto" integer 
 )
 
+CREATE TABLE "kssl.nasis_taxhistory" 
+( "peiid" integer,
+	"classdate" date,
+	"classtype" text,
+	"taxonname" text,
+	"localphase" text,
+	"taxonkind" text,
+	"taxorder" text,
+	"taxsuborder" text,
+	"taxgrtgroup" text,
+	"taxsubgrp" text,
+	"taxpartsize" text,
+	"taxpartsizemod" text,
+	"taxceactcl" text,
+	"taxreaction" text,
+	"taxtempcl" text,
+	"taxmoistscl" text,
+	"taxtempregime" text,
+	"soiltaxedition" text,
+	"psctopdepth" integer,
+	"pscbotdepth" integer,
+	"osdtypelocflag" integer,
+	"selection_method" text 
+)

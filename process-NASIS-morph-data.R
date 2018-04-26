@@ -119,19 +119,19 @@ write.csv(best.tax.data, file=gzfile('export/kssl-nasis-taxhistory.csv.gz'), row
 # approximate table defs
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql')
 
-cat('\n\n', file='nasis-tables.sql', append = TRUE)
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phcolor', obj=h.color[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
-cat('\n\n', file='nasis-tables.sql', append = TRUE)
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phfrags', obj=h.frags[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
-cat('\n\n', file='nasis-tables.sql', append = TRUE)
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phpores', obj=h.pores[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
-cat('\n\n', file='nasis-tables.sql', append = TRUE)
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phstructure', obj=h.structure[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
-cat('\n\n', file='nasis-tables.sql', append = TRUE)
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_taxhistory', obj=best.tax.data[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 
