@@ -35,7 +35,7 @@ LEFT JOIN PSDA_and_Rock_Fragments ON NCSS_Layer.labsampnum = PSDA_and_Rock_Fragm
 LEFT JOIN Carbon_and_Extractions ON NCSS_Layer.labsampnum = Carbon_and_Extractions.labsampnum
 LEFT JOIN ph_and_Carbonates ON NCSS_Layer.labsampnum = ph_and_Carbonates.labsampnum
 LEFT JOIN (SELECT * FROM Bulk_Density_and_Moisture WHERE prep_code = 'S') AS db ON NCSS_Layer.labsampnum = db.labsampnum
-LEFT JOIN (SELECT * FROM Supplementary_Tier_3 WHERE prep_code = 'S') AS t3 ON NCSS_Layer.labsampnum = t3.labsampnum
+LEFT JOIN (SELECT DISTINCT labsampnum, wrd_l2 FROM Supplementary_Tier_3) AS t3 ON NCSS_Layer.labsampnum = t3.labsampnum
 LEFT JOIN Salt ON NCSS_Layer.labsampnum = Salt.labsampnum
 LEFT JOIN Phosphorus ON NCSS_Layer.labsampnum = Phosphorus.labsampnum
 LEFT JOIN Rosetta_Parameters ON NCSS_Layer.labsampnum = Rosetta_Parameters.labsampnum
