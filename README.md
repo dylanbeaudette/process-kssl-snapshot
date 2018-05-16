@@ -72,11 +72,11 @@ Horizon Attributes:
   * vcs (very coarse sand, wt. %)
   * acid_tea
   * base_sum
-  * al_kcl
+  * al_kcl: KCl extractable aluminum approximates the exchangeable Al, and is a measure of the active acidity present in soils with a 1:1 water pH less than 5.5. It relates to the immediate lime requirement and the CEC of the soil. cmol(+)/kg
   * cec7 (CEC measured at pH 7, ... details)
   * cec82 (CEC measured at pH 8.2, ... details)
-  * ecec
-  * al_sat
+  * ecec: cmol(+)/kg
+  * al_sat: Aluminum saturation is calculated by (AL_KCL/(Sum of bases))*100. It provides some inference of potential Al toxicity problems, although many other factors influence Al toxicity, %
   * bs82 (base saturation, pH 8.2, ... details)
   * bs7 (base saturation, pH 7, ... details)
   * ex_ca
