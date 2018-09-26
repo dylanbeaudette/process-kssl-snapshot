@@ -97,7 +97,7 @@ a$variable <- factor(a$variable, labels=c('Clay %', 'Ex-K Saturation', 'pH 1:1 W
 cols <- brewer.pal('Set1', n=3)
 
 # plot: nice
-png(file='S:/NRCS/Lab_Data/properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
+png(file='S:/NRCS/430 SOI Soil Survey/430-13 Investigations/Lab_Data/properties_by_mlra.png', width=1400, height=700, antialias = 'cleartype')
 print(xyplot(
   top ~ p.q50 | variable, groups=mlra, data=a, lower=a$p.q25, upper=a$p.q75, layout=c(5, 1),
   ylim=c(170,-5), alpha=0.25, scales=list(y=list(tick.num=7, alternating=3), x=list(relation='free',alternating=1)),
