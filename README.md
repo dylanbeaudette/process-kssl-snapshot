@@ -10,7 +10,7 @@ Snapshots:
 
 ## News
 * 2018-12-21: new NASIS snapshot from October 2018
-* 2018-09-26: new KSSL snapshot from September 2018
+* 2018-09-26: new KSSL snapshot from September 2018 (64732 pedons, 416567 horizons)
 * 2018-04-26: now more `wrd_l2` values, thanks to Jacob Isleib, closes [issue #4](https://github.com/dylanbeaudette/process-kssl-snapshot/issues/4)
 * 2017-09-13: new KSSL / NASIS snapshot from September 2017 (64153 pedons, 413385 horizons)
 * 2017-09-11: complete overhaul, now based on [FGDB -> TXT -> SQLite workflow](https://github.com/ncss-tech/lab-data-delivery/)
@@ -115,10 +115,10 @@ Horizon Attributes:
   * cec7_cly
   * frags (weight percentage > 2mm)
   * wrd_l2 (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties)
-  * estimated_oc
-  * estimated_om
-  * estimated_c_to_n
-  * ex_k_saturation
+  * estimated_oc (%)
+  * estimated_om (%)
+  * estimated_c_to_n (unitless)
+  * ex_k_saturation (%)
   * estimated_ph_h2o
   * theta_r
   * theta_s
