@@ -56,77 +56,77 @@ State and MLRA codes are added to the data using spatial overlay with the most r
 ## Data Elements
 Horizon Attributes:
 
-  * pedon_key (internal ID)
-  * labsampnum (links KSSL and NASIS records)
-  * hzn_top (horizon top depth: cm)
-  * hzn_bot (horizon bottom depth: cm)
-  * hzn_desgn (horizon designation, updated)
-  * hzn_desgn_old (original horizon designation)
-  * lab_texture_class (lab determined texture class)
-  * sand (sand, wt. %)
-  * silt (silt, wt. %)
-  * clay (clay, wt. %)
-  * co3_cly (carbonate clay ??)
-  * silt_f_psa (fine silt, wt. %)
-  * silt_c_psa (coarse silt, wt. %)
-  * vfs (very fine sand, wt. %)
-  * fs (fine sand, wt. %)
-  * ms (medium sand, wt. %)
-  * cs (coarse sand, wt. %)
-  * vcs (very coarse sand, wt. %)
-  * acid_tea
-  * base_sum
-  * al_kcl: KCl extractable aluminum approximates the exchangeable Al, and is a measure of the active acidity present in soils with a 1:1 water pH less than 5.5. It relates to the immediate lime requirement and the CEC of the soil. cmol(+)/kg
-  * cec7 (CEC measured at pH 7, ... details)
-  * cec82 (CEC measured at pH 8.2, ... details)
-  * ecec: cmol(+)/kg
-  * al_sat: Aluminum saturation is calculated by (AL_KCL/(Sum of bases))*100. It provides some inference of potential Al toxicity problems, although many other factors influence Al toxicity, %
-  * bs82 (base saturation, pH 8.2, ... details)
-  * bs7 (base saturation, pH 7, ... details)
-  * ex_ca
-  * ex_mg
-  * ex_na
-  * ex_k
-  * ph_h2o
-  * ph_cacl2
-  * ph_kcl
-  * ph_sp
-  * ph_ox (pH, Oxidized)
-  * gypl20
-  * caco3
-  * ec_12pre
-  * sar
-  * oc (organic C, weight percent)
-  * c_tot
-  * n_tot
-  * fe_dith (weight percent, <2mm fraction)
-  * fe_ox (weight percent, <2mm fraction)
-  * al_dith (weight percent, <2mm fraction)
-  * al_ox (weight percent, <2mm fraction) 
-  * p_olsn
-  * p_nz
-  * db_13b
-  * db_od
-  * COLEws
-  * whc
-  * w3cld
-  * w15l2
-  * w15cly
-  * cec7_cly
-  * frags (weight percentage > 2mm)
-  * wrd_l2 (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties)
-  * estimated_oc (%)
-  * estimated_om (%)
-  * estimated_c_to_n (unitless)
-  * ex_k_saturation (%)
-  * estimated_ph_h2o
-  * theta_r
-  * theta_s
-  * alpha
-  * npar
-  * Ks
-  * Ko
-  * Lpar
+  * `pedon_key` (internal ID)
+  * `labsampnum` (links KSSL and NASIS records)
+  * `hzn_top` (horizon top depth: cm)
+  * `hzn_bot` (horizon bottom depth: cm)
+  * `hzn_desgn` (horizon designation, updated)
+  * `hzn_desgn_old` (original horizon designation)
+  * `lab_texture_class` (lab determined texture class)
+  * `sand` (sand, wt. %)
+  * `silt` (silt, wt. %)
+  * `clay` *ClyT_p: Total clay is the soil separate with <0.002 mm particle diameter. Clay size carbonate is included. Total clay is reported as a weight percent of the <2 mm fraction.*
+  * `co3_cly` (carbonate clay ??)
+  * `silt_f_psa` (fine silt, wt. %)
+  * `silt_c_psa` (coarse silt, wt. %)
+  * `vfs` (very fine sand, wt. %)
+  * `fs` (fine sand, wt. %)
+  * `ms` (medium sand, wt. %)
+  * `cs` (coarse sand, wt. %)
+  * `vcs` (very coarse sand, wt. %)
+  * `acid_tea`
+  * `base_sum`
+  * `al_kcl`: KCl extractable aluminum approximates the exchangeable Al, and is a measure of the active acidity present in soils with a 1:1 water pH less than 5.5. It relates to the immediate lime requirement and the CEC of the soil. cmol(+)/kg
+  * `cec7` (CEC measured at pH 7, ... details)
+  * `cec82` (CEC measured at pH 8.2, ... details)
+  * `ecec`: cmol(+)/kg
+  * `al_sat`: Aluminum saturation is calculated by (AL_KCL/(Sum of bases))*100. It provides some inference of potential Al toxicity problems, although many other factors influence Al toxicity, %
+  * `bs82` (base saturation, pH 8.2, ... details)
+  * `bs7` (base saturation, pH 7, ... details)
+  * `ex_ca`
+  * `ex_mg`
+  * `ex_na`
+  * `ex_k`
+  * `ph_h2o`
+  * `ph_cacl2`
+  * `ph_kcl`
+  * `ph_sp`
+  * `ph_ox` (pH, Oxidized)
+  * `gypl20`
+  * `caco3`
+  * `ec_12pre`
+  * `sar`
+  * `oc` *Organic carbon is a measure of all organic forms of carbon in the soil, including organic carbon within minerals. % wt*
+  * `c_tot`
+  * `n_tot`
+  * `fe_dith` (weight percent, <2mm fraction)
+  * `fe_ox` (weight percent, <2mm fraction)
+  * `al_dith` (weight percent, <2mm fraction)
+  * `al_ox` (weight percent, <2mm fraction) 
+  * `p_olsn`
+  * `p_nz`
+  * `db_13b`
+  * `db_od`
+  * `COLEws`
+  * `whc`
+  * `w3cld`
+  * `w15l2`
+  * `w15cly`
+  * `cec7_cly`
+  * `frags` (weight percentage > 2mm)
+  * `wrd_l2` (Water Retention Difference, 1/3 to 15 Bar, <2mm: usually calculated from other properties)
+  * `estimated_oc` (wt. %) see above for details
+  * `estimated_om` (wt. %) see above for details
+  * `estimated_c_to_n` (unitless)
+  * `ex_k_saturation` (%)
+  * `estimated_ph_h2o`
+  * `theta_r` $\theta_{r}$ residual water content, parameter to van Genuchten model, as estimated by Rosetta
+  * `theta_s` $\theta_{s}$ saturated water content, parameter to van Genuchten model, as estimated by Rosetta
+  * `alpha` $log_{10}(\alpha)$ inverse of air entry suction, parameter to van Genuchten model, as estimated by Rosetta
+  * `npar` $log_{10}(n)$ measure of pore-size distribution, parameter to van Genuchten model, as estimated by Rosetta
+  * `Ks` $K_{s}$ saturated hydraulic conductivity, as estimated by Rosetta
+  * `Ko`
+  * `Lpar`
 
 
 Site/Pedon Attributes:
