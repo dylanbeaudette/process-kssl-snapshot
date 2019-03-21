@@ -59,7 +59,7 @@ ORDER BY pedon_key;"
 
 
 # setup connection to SQLite DB from FGDB export
-db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/text-file-to-sqlite/KSSL-data.sqlite")
+db <- dbConnect(RSQLite::SQLite(), "E:/NASIS-KSSL-LDM/KSSL-data.sqlite")
 
 # fetch records
 h <- dbGetQuery(db, q.hz)

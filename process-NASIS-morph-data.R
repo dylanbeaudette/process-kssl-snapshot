@@ -18,6 +18,12 @@
 #     - apparent duplicates due to errors / lack of table primary keys in query results
 #       see: 
 
+## diagnostic features
+q.diag <- "SELECT DISTINCT
+peiidref as peiid, featdept, featdepb, featkind
+FROM pediagfeatures
+ORDER BY peiidref;"
+
 ## taxonomic history
 q.taxa <- "SELECT DISTINCT
 peiidref as peiid, classdate, classtype, taxonname, localphase, taxonkind, taxorder, taxsuborder, taxgrtgroup, taxsubgrp, taxpartsize, taxpartsizemod, taxceactcl, taxreaction, taxtempcl, taxmoistscl, taxtempregime, soiltaxedition, psctopdepth, pscbotdepth, osdtypelocflag
@@ -84,13 +90,17 @@ JOIN phstructure ON phorizon.phiid = phstructure.phiidref
 LEFT JOIN phsample ON phorizon.phiid = phsample.phiidref
 ORDER BY phiid;"
 
+
+
 ## phrdxfeatures
 
 ## phredoxfcolor
 
 
+
+
 # setup connection to SQLite DB from FGDB export
-db <- dbConnect(RSQLite::SQLite(), "E:/working_copies/lab-data-delivery/code/text-file-to-sqlite/NASIS-data.sqlite")
+db <- dbConnect(RSQLite::SQLite(), "E:/NASIS-KSSL-LDM/NASIS-data.sqlite")
 
 # reformat raw data and return as DF
 nasis.site <- dbGetQuery(db, q.site)
@@ -99,8 +109,11 @@ h.frags <- dbGetQuery(db, q.frags)
 h.pores <- dbGetQuery(db, q.pores)
 h.structure <- dbGetQuery(db, q.structure)
 h.taxa <- dbGetQuery(db, q.taxa)
+h.diag <- dbGetQuery(db, q.diag)
 
 dbDisconnect(db)
+
+
 
 ### SoilWeb related ###
 
@@ -118,6 +131,7 @@ system.time(best.tax.data <- ddply(h.taxa, 'peiid', soilDB:::.pickBestTaxHistory
 
 ## save to CSV files for upload to soilweb
 write.csv(best.tax.data, file=gzfile('export/kssl-nasis-taxhistory.csv.gz'), row.names=FALSE)
+write.csv(h.diag, file=gzfile('export/kssl-nasis-diagnostic.csv.gz'), row.names=FALSE)
 write.csv(nasis.site, file=gzfile('export/kssl-nasis-site.csv.gz'), row.names=FALSE)
 write.csv(h.color, file=gzfile('export/kssl-nasis-phcolor.csv.gz'), row.names=FALSE)
 write.csv(h.frags, file=gzfile('export/kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
@@ -131,6 +145,9 @@ write.csv(h.structure, file=gzfile('export/kssl-nasis-phstructure.csv.gz'), row.
 ## manual intervention: taxonname must be converted to citext
 # approximate table defs
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_site', obj=nasis.site[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql')
+
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_pediagfeatures', obj=h.diag[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phcolor', obj=h.color[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
