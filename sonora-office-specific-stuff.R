@@ -21,11 +21,11 @@ gc(reset = TRUE)
 # (p2 <- xyplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), col='black', type=c('p','smooth','g')))
 
 png(file='figures/bs82-vs-bs7.png', width=600, height=600)
-print(hexbinplot(bs82 ~ bs7, data=horizons(lab), xbins=30, main='MLRAs: 17, 18, 22A', ylab='Base Saturation (NH4-Ac, pH 7)', xlab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100 & bs7 < 100, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(bs82 ~ bs7, data=horizons(lab), colramp=viridis, colorkey=FALSE, xbins=30, main='MLRAs: 17, 18, 22A', ylab='Base Saturation (NH4-Ac, pH 7)', xlab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100 & bs7 < 100, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 png(file='figures/bs82-vs-ph_h2o.png', width=600, height=600)
-print(hexbinplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), xbins=50, main='MLRAs: 17, 18, 22A', xlab='pH 1:1 H2O', ylab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100, asp=1))
+print(hexbinplot(bs82 ~ estimated_ph_h2o, data=horizons(lab), colramp=viridis, colorkey=FALSE, xbins=50, main='MLRAs: 17, 18, 22A', xlab='pH 1:1 H2O', ylab='Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, subset=bs82 < 100, asp=1))
 dev.off()
 
 # model bs82 from bs7, truncate to less than 100%
@@ -36,7 +36,7 @@ dev.off()
 
 # check predictions
 png(file='figures/predicted-bs82-vs-measured-bs82.png', width=600, height=600)
-print(hexbinplot(lab$bs82 ~ predict(l.bs, horizons(lab)), xbins=30, main='MLRAs: 17, 18, 22A', ylab='Predicted Base Saturation (sum of bases, pH 8.2)', xlab='Measured Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
+print(hexbinplot(lab$bs82 ~ predict(l.bs, horizons(lab)), colramp=viridis, colorkey=FALSE, xbins=30, main='MLRAs: 17, 18, 22A', ylab='Predicted Base Saturation (sum of bases, pH 8.2)', xlab='Measured Base Saturation (sum of bases, pH 8.2)', trans=log, inv=exp, asp=1) + latticeExtra::layer(panel.abline(0, 1, col='red', lwd=2, lty=2)))
 dev.off()
 
 

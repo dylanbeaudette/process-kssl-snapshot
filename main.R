@@ -5,6 +5,7 @@ library(maps)
 library(plyr)
 library(latticeExtra)
 library(hexbin)
+library(viridis)
 library(rms)
 library(RPostgreSQL)
 
