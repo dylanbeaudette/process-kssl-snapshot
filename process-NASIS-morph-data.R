@@ -92,9 +92,20 @@ ORDER BY phiid;"
 
 
 
-## phrdxfeatures
+## phrdxfeatures + phredoxfcolor
+# TODO: combining these two tables results in a lot of replication 
+# hz:phrdxfeatures:phredoxfcolor  --> 1:many:many
 
-## phredoxfcolor
+q.rmf <- "SELECT DISTINCT
+phiid, labsampnum, rdxfeatpct, rdxfeatsize, rdxfeatcntrst, rdxfeathardness, rdxfeatshape, rdxfeatkind, rdxfeatlocation, rdxfeatboundary,
+colorpct, colorhue, colorvalue, colorchroma, colormoistst
+FROM
+phorizon 
+JOIN phrdxfeatures ON phorizon.phiid = phrdxfeatures.phiidref
+JOIN phredoxfcolor ON phredoxfcolor.phrdxfiidref = phrdxfeatures.phrdxfiid
+LEFT JOIN phsample ON phorizon.phiid = phsample.phiidref
+ORDER BY phiid;"
+
 
 
 
