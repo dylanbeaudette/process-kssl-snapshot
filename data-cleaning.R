@@ -48,8 +48,8 @@ if(length(bad.O.hz.idx) > 0)
 
 ## TODO: use a local copy of these data
 # national mlra boundary map, already GCS NAD83
-mlra <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/mlra/MLRA Boundaries', layer='mlra_v42', stringsAsFactors = FALSE)
-states <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/Boundaries', layer='statesp020', stringsAsFactors = FALSE)
+mlra <- readOGR(dsn='E:/gis_data/MLRA', layer='mlra_v42', stringsAsFactors = FALSE)
+states <- readOGR(dsn='L:/NRCS/MLRAShared/Geodata/Boundaries/States', layer='cb_2016_us_state_500k', stringsAsFactors = FALSE)
 
 # keep only those profiles with coordinates
 s.sp <- subset(s, subset=!is.na(x))
@@ -59,7 +59,7 @@ coordinates(s.sp) <- ~ x + y
 proj4string(s.sp) <- '+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0'
 
 # overlay
-s.sp$state <- over(s.sp, states)$STATE
+s.sp$state <- over(s.sp, states)$NAME
 s.sp$mlra <- over(s.sp, mlra)$MLRARSYM
 
 # copy back to original site data
