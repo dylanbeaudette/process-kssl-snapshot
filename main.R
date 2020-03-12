@@ -10,6 +10,8 @@ library(rms)
 library(RPostgreSQL)
 
 
+## TODO: transition to latest version of the LDM snapshot
+
 ## TODO: flag and fix pedons with bad horizonation
 ## CA Data NOTE: MLRA derived from the site area overlap table cannot be trusted
 ## CA Data NOTE: SoilVeg pedons have saturated paste pH...
@@ -22,10 +24,16 @@ library(RPostgreSQL)
 # this saves files for upload to SoilWeb export/
 source('process-KSSL-data.R')
 
+## geochem, optical, XRD tables from the latest snapshot
+## many TODO items remain
+source('process-geochem-mineralogy.R')
+
+
 ## extract NASIS morphologic data
 ## 2017-09-06: now based on SQLite DB
 # this saves files for upload to SoilWeb export/
 source('process-NASIS-morph-data.R')
+
 
 ## clean-up data
 # estimate pH 1:1 water, oc, om
