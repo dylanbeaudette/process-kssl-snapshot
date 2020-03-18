@@ -1,4 +1,5 @@
 
+## 2020-03-18: adding composite RMF data
 ## 2018-04-26: new snapshot
 ## 2017-09-06: first cut at reading SQLite snapshot based on Adolfo's products
 ## 2017-04-24: these queries no longer appear to work... switching over to new snapshots from Adolfo
@@ -93,9 +94,7 @@ ORDER BY phiid;"
 
 
 ## phrdxfeatures + phredoxfcolor
-# TODO: combining these two tables results in a lot of replication 
 # hz:phrdxfeatures:phredoxfcolor  --> 1:many:many
-
 q.rmf <- "SELECT DISTINCT
 phiid, labsampnum, rdxfeatpct, rdxfeatsize, rdxfeatcntrst, rdxfeathardness, rdxfeatshape, rdxfeatkind, rdxfeatlocation, rdxfeatboundary,
 colorpct, colorhue, colorvalue, colorchroma, colormoistst
@@ -121,6 +120,7 @@ h.pores <- dbGetQuery(db, q.pores)
 h.structure <- dbGetQuery(db, q.structure)
 h.taxa <- dbGetQuery(db, q.taxa)
 h.diag <- dbGetQuery(db, q.diag)
+h.rmf <- dbGetQuery(db, q.rmf)
 
 dbDisconnect(db)
 
@@ -148,6 +148,7 @@ write.csv(h.color, file=gzfile('export/kssl-nasis-phcolor.csv.gz'), row.names=FA
 write.csv(h.frags, file=gzfile('export/kssl-nasis-phfrags.csv.gz'), row.names=FALSE)
 write.csv(h.pores, file=gzfile('export/kssl-nasis-phpores.csv.gz'), row.names=FALSE)
 write.csv(h.structure, file=gzfile('export/kssl-nasis-phstructure.csv.gz'), row.names=FALSE)
+write.csv(h.rmf, file=gzfile('export/kssl-nasis-rmf.csv.gz'), row.names=FALSE)
 
 
 
@@ -175,7 +176,8 @@ cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_phstructure', 
 cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
 cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_taxhistory', obj=best.tax.data[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
-
+cat('\n\n', file='table-defs/nasis-tables.sql', append = TRUE)
+cat(postgresqlBuildTableDefinition(PostgreSQL(), name='kssl.nasis_rmf', obj=h.rmf[1, ], row.names=FALSE), file='table-defs/nasis-tables.sql', append = TRUE)
 
 
 

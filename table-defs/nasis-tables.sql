@@ -90,3 +90,21 @@ CREATE TABLE "kssl.nasis_taxhistory"
 	"osdtypelocflag" integer,
 	"selection_method" text 
 )
+
+CREATE TABLE "kssl.nasis_rmf" 
+( "phiid" integer,
+	"labsampnum" text,
+	"rdxfeatpct" integer,
+	"rdxfeatsize" text,
+	"rdxfeatcntrst" text,
+	"rdxfeathardness" text,
+	"rdxfeatshape" text,
+	"rdxfeatkind" text,
+	"rdxfeatlocation" text,
+	"rdxfeatboundary" text,
+	"colorpct" integer,
+	"colorhue" text,
+	"colorvalue" float8,
+	"colorchroma" integer,
+	"colormoistst" text 
+)
